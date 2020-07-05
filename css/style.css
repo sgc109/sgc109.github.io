@@ -412,13 +412,13 @@ button,
 input,
 select,
 textarea {
-  font-family: Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif;
+  font-family: 'Spoqa Han Sans', Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif;
 }
 code,
 pre {
   -moz-osx-font-smoothing: auto;
   -webkit-font-smoothing: auto;
-  font-family: 'Source Code Pro', monospace, 'Microsoft YaHei';
+  font-family: 'IBM Plex Mono', 'Consolas', 'Source Code Pro', monospace, 'Microsoft YaHei';
 }
 body {
   color: #4a4a4a;
@@ -1057,19 +1057,19 @@ a.has-text-grey-lightest:focus {
   font-weight: 700 !important;
 }
 .is-family-primary {
-  font-family: Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif !important;
+  font-family: 'Spoqa Han Sans', Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif !important;
 }
 .is-family-secondary {
-  font-family: Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif !important;
+  font-family: 'Spoqa Han Sans', Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif !important;
 }
 .is-family-sans-serif {
-  font-family: Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif !important;
+  font-family: 'Spoqa Han Sans', Ubuntu, Roboto, 'Open Sans', 'Microsoft YaHei', sans-serif !important;
 }
 .is-family-monospace {
   font-family: monospace !important;
 }
 .is-family-code {
-  font-family: 'Source Code Pro', monospace, 'Microsoft YaHei' !important;
+  font-family: 'IBM Plex Mono', 'Consolas', 'Source Code Pro', monospace, 'Microsoft YaHei' !important;
 }
 .is-block {
   display: block !important;
@@ -10238,19 +10238,10 @@ fieldset[disabled] .select select:hover {
   padding: 3rem 1.5rem 6rem;
 }
 html {
-  height: 100%;
   -webkit-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
-}
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-body > .section {
-  flex-grow: 1;
 }
 .ml-0,
 .mx-0 {
@@ -10758,27 +10749,45 @@ article.article .article-meta {
   overflow-x: auto;
   margin-bottom: 0.5rem;
 }
+article.article .title {
+  font-size: 31px;
+  font-weight: 700;
+  line-height: 1.5;
+}
 article.article .content {
   word-wrap: break-word;
-  font-size: 1.1rem;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
 }
 article.article .content h1 {
-  font-size: 1.75em;
+  font-size: 31px;
+  font-weight: 700;
+  line-height: 2;
 }
 article.article .content h2 {
-  font-size: 1.5em;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 2;
 }
 article.article .content h3 {
-  font-size: 1.25em;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 2;
 }
 article.article .content h4 {
-  font-size: 1.125em;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 2;
 }
 article.article .content h5 {
-  font-size: 1em;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 2;
 }
 article.article .content pre {
-  font-size: 0.85em;
+  font-size: 0.9em;
+  line-height: 1.75;
 }
 article.article .content code {
   padding: 0;
@@ -10793,13 +10802,6 @@ article.article .content blockquote.pullquote {
 }
 article.article .content blockquote footer strong + cite {
   margin-left: 0.5em;
-}
-article.article .content .message.message-immersive {
-  border-radius: 0;
-  margin: 0 -1.5rem 1.5rem -1.5rem;
-}
-article.article .content .message.message-immersive .message-body {
-  border: none;
 }
 .rtl {
   direction: rtl;
@@ -10861,6 +10863,8 @@ article.article .content .message.message-immersive .message-body {
   margin-left: auto;
 }
 .navbar-main .navbar-item {
+  font-size: 15px;
+  font-weight: 400;
   display: flex;
   align-items: center;
   padding: 1.25rem 0.75rem;
@@ -11185,7 +11189,7 @@ figure.highlight figcaption * {
 }
 figure.highlight figcaption span {
   font-weight: 500;
-  font-family: 'Source Code Pro', monospace, 'Microsoft YaHei';
+  font-family: 'IBM Plex Mono', 'Consolas', 'Source Code Pro', monospace, 'Microsoft YaHei';
 }
 figure.highlight figcaption .level-left *:not(:last-child) {
   margin-right: 0.5em;
