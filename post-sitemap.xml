@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/2020/07/06/rest-template/</loc>
+        <lastmod>2020-07-15T13:12:21.436Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/2020/07/06/spring-profiles/</loc>
         <lastmod>2020-07-12T16:06:09.833Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -42,14 +50,6 @@
     <url>
         <loc>http://sgc109.github.io/2020/07/06/spring-properties/</loc>
         <lastmod>2020-07-10T05:27:16.746Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/07/06/rest-template/</loc>
-        <lastmod>2020-07-10T05:27:08.458Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
