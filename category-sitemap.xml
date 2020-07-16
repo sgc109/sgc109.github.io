@@ -8,6 +8,20 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/categories/Tools/Git/</loc>
+        <lastmod>2020-07-16T18:32:20.247Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/Tools/</loc>
+        <lastmod>2020-07-16T18:32:20.247Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/categories/Server/Spring/</loc>
         <lastmod>2020-07-16T13:47:32.509Z</lastmod>
         <changefreq>weekly</changefreq>
