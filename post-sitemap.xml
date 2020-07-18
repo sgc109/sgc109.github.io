@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/</loc>
+        <lastmod>2020-07-18T18:19:25.765Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/2020/07/19/head-first-design-patterns/</loc>
         <lastmod>2020-07-18T18:17:37.334Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -26,14 +34,6 @@
     <url>
         <loc>http://sgc109.github.io/2020/07/05/software-craftman/</loc>
         <lastmod>2020-07-18T16:24:22.759Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/</loc>
-        <lastmod>2020-07-18T14:12:02.458Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
