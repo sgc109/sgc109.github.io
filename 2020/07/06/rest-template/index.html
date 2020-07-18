@@ -6,107 +6,120 @@
         gtag('config', 'UA-172530521-1');</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><link rel="alternate" href="/rss2.xml" title="기억저장소" type="application/rss+xml">
 </head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="기억저장소" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="thumbnail" src="/images/rest-template/thumbnail.jpg" alt="Spring 의 RestTemplate"></span></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-07-06T11:10:24.000Z" title="2020-07-06T11:10:24.000Z">2020-07-06</time><span class="level-item"><a class="link-muted" href="/categories/Server/">Server</a><span> / </span><a class="link-muted" href="/categories/Server/Spring/">Spring</a></span></div></div><h1 class="title is-3 is-size-4-mobile">Spring 의 RestTemplate</h1><div class="content"><p>Spring REST Client 인 <strong>RestTemplate</strong> 에 대해 알아보자</p>
 <a id="more"></a>
-
-<p>RestTemplate 을 사용하여 HTTP request 가 가능하며, </p>
-<p>GET, POST, PUT, DELETE, HEAD 등의 method 를 사용할 수 있다.  </p>
-<p>본 글에서는 이 중에서도 GET, POST, HEAD 메소드의 사용 예를 알아본다.  </p>
-<p>또, RestTemplate 에서 Exception Handling 을 하는 방식에 대해서도 알아본다.  </p>
-<h2 id="기본적인-사용법"><a href="#기본적인-사용법" class="headerlink" title="기본적인 사용법"></a>기본적인 사용법</h2><h3 id="GET-메소드"><a href="#GET-메소드" class="headerlink" title="GET 메소드"></a>GET 메소드</h3><h4 id="JSON-받아오기"><a href="#JSON-받아오기" class="headerlink" title="JSON 받아오기"></a>JSON 받아오기</h4><p><em>getForEntity</em> 메소드를 사용하여 JSON을 받아올 수 있다.</p>
+<p>RestTemplate 을 사용하여 HTTP request 가 가능하며,</p>
+<p>GET, POST, PUT, DELETE, HEAD 등의 method 를 사용할 수 있다.</p>
+<p>본 글에서는 이 중에서도 GET, POST, HEAD 메소드의 사용 예를 알아본다.</p>
+<p>또, RestTemplate 에서 Exception Handling 을 하는 방식에 대해서도 알아본다.</p>
+<h2 id="기본적인-사용법">기본적인 사용법</h2>
+<h3 id="GET-메소드">GET 메소드</h3>
+<h4 id="JSON-받아오기">JSON 받아오기</h4>
+<p><em>getForEntity</em> 메소드를 사용하여 JSON을 받아올 수 있다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">RestTemplate restTemplate = <span class="keyword">new</span> RestTemplate();</span><br><span class="line">String fooResourceUrl</span><br><span class="line">  = <span class="string">"http://localhost:8080/spring-rest/foos"</span>;</span><br><span class="line">ResponseEntity&lt;String&gt; response</span><br><span class="line">  = restTemplate.getForEntity(fooResourceUrl + <span class="string">"/1"</span>, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span><br><span class="line"></span><br><span class="line">ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">JsonNode root = mapper.readTree(response.getBody());</span><br><span class="line">JsonNode name = root.path(<span class="string">"name"</span>);</span><br><span class="line">assertThat(name.asText(), notNullValue());</span><br></pre></td></tr></table></figure>
 <p>JsonNode 클래스는 <strong>Jackson</strong> 이 제공하는 JSON 노드 구조 클래스다.</p>
-<h4 id="JSON-대신-POJO-받아오기"><a href="#JSON-대신-POJO-받아오기" class="headerlink" title="JSON 대신 POJO 받아오기"></a>JSON 대신 POJO 받아오기</h4><p>Response 를 곧바로 DTO 에 매핑할 수 있다.</p>
+<h4 id="JSON-대신-POJO-받아오기">JSON 대신 POJO 받아오기</h4>
+<p>Response 를 곧바로 DTO 에 매핑할 수 있다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Foo</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> id;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="comment">// standard getters and setters</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>이런 POJO가 있을 때 <em>getForObject</em> 메소드를 쓸 수 있다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Foo foo = restTemplate</span><br><span class="line">  .getForObject(fooResourceUrl + <span class="string">"/1"</span>, Foo<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">assertThat(foo.getName(), notNullValue());</span><br><span class="line">assertThat(foo.getId(), is(<span class="number">1L</span>));</span><br></pre></td></tr></table></figure>
-
-<h3 id="HEAD-메소드"><a href="#HEAD-메소드" class="headerlink" title="HEAD 메소드"></a>HEAD 메소드</h3><p><em>headForHeaders</em> 메소드로 간단하게 헤더만 가져올 수 있다.</p>
+<h3 id="HEAD-메소드">HEAD 메소드</h3>
+<p><em>headForHeaders</em> 메소드로 간단하게 헤더만 가져올 수 있다.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HttpHeaders httpHeaders &#x3D; restTemplate.headForHeaders(fooResourceUrl);</span><br><span class="line">assertTrue(httpHeaders.getContentType().includes(MediaType.APPLICATION_JSON));</span><br></pre></td></tr></table></figure>
-
-<h3 id="POST-메소드"><a href="#POST-메소드" class="headerlink" title="POST 메소드"></a>POST 메소드</h3><p><em>postForLocation()</em>, <em>postForObject()</em> 또는 <em>postForEntity()</em> 를 사용할 수 있다.</p>
-<p><em>postForLocation()</em> 는 생성된 리소스의 URI 를 반환하는 반면,<br><em>postForObject()</em> 와 <em>postForEntity()</em> 는 리소스 자체를 반환한다.</p>
-<h4 id="postForObject"><a href="#postForObject" class="headerlink" title="postForObject()"></a>postForObject()</h4><p>다음과 같이 사용한다.</p>
+<h3 id="POST-메소드">POST 메소드</h3>
+<p><em>postForLocation()</em>, <em>postForObject()</em> 또는 <em>postForEntity()</em> 를 사용할 수 있다.</p>
+<p><em>postForLocation()</em> 는 생성된 리소스의 URI 를 반환하는 반면,<br>
+<em>postForObject()</em> 와 <em>postForEntity()</em> 는 리소스 자체를 반환한다.</p>
+<h4 id="postForObject">postForObject()</h4>
+<p>다음과 같이 사용한다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RestTemplate restTemplate = <span class="keyword">new</span> RestTemplate();</span><br><span class="line"> </span><br><span class="line">HttpEntity&lt;Foo&gt; request = <span class="keyword">new</span> HttpEntity&lt;&gt;(<span class="keyword">new</span> Foo(<span class="string">"bar"</span>));</span><br><span class="line">Foo foo = restTemplate.postForObject(fooResourceUrl, request, Foo<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">assertThat(foo, notNullValue());</span><br><span class="line">assertThat(foo.getName(), is(<span class="string">"bar"</span>));</span><br></pre></td></tr></table></figure>
-
-<h4 id="postForLocation"><a href="#postForLocation" class="headerlink" title="postForLocation()"></a>postForLocation()</h4><p>다음과 같이 사용한다.</p>
+<h4 id="postForLocation">postForLocation()</h4>
+<p>다음과 같이 사용한다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HttpEntity&lt;Foo&gt; request = <span class="keyword">new</span> HttpEntity&lt;&gt;(<span class="keyword">new</span> Foo(<span class="string">"bar"</span>));</span><br><span class="line">URI location = restTemplate</span><br><span class="line">  .postForLocation(fooResourceUrl, request);</span><br><span class="line">assertThat(location, notNullValue());</span><br></pre></td></tr></table></figure>
-
-<h4 id="exchange"><a href="#exchange" class="headerlink" title="exchange()"></a>exchange()</h4><p>좀 더 범용적인 <em>exchange()</em> 메소드를 사용할 수도 있다.</p>
+<h4 id="exchange">exchange()</h4>
+<p>좀 더 범용적인 <em>exchange()</em> 메소드를 사용할 수도 있다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">RestTemplate restTemplate = <span class="keyword">new</span> RestTemplate();</span><br><span class="line">HttpEntity&lt;Foo&gt; request = <span class="keyword">new</span> HttpEntity&lt;&gt;(<span class="keyword">new</span> Foo(<span class="string">"bar"</span>));</span><br><span class="line">ResponseEntity&lt;Foo&gt; response = restTemplate</span><br><span class="line">  .exchange(fooResourceUrl, HttpMethod.POST, request, Foo<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">  </span><br><span class="line">assertThat(response.getStatusCode(), is(HttpStatus.CREATED));</span><br><span class="line">  </span><br><span class="line">Foo foo = response.getBody();</span><br><span class="line">  </span><br><span class="line">assertThat(foo, notNullValue());</span><br><span class="line">assertThat(foo.getName(), is(<span class="string">"bar"</span>));</span><br></pre></td></tr></table></figure>
-
-<h4 id="폼-데이터-전송하기"><a href="#폼-데이터-전송하기" class="headerlink" title="폼 데이터 전송하기"></a>폼 데이터 전송하기</h4><p>서버가 ‘&amp;’로 연결된 여러개의 ‘키=밸류’ 쌍을 받을 수 있도록 ‘Content-Type’ 을 <em>application/x-www-form-urlencoded</em> 로 변경해줘야한다.</p>
+<h4 id="폼-데이터-전송하기">폼 데이터 전송하기</h4>
+<p>서버가 ‘&amp;’로 연결된 여러개의 ‘키=밸류’ 쌍을 받을 수 있도록 ‘Content-Type’ 을 <em>application/x-www-form-urlencoded</em> 로 변경해줘야한다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HttpHeaders headers = <span class="keyword">new</span> HttpHeaders();</span><br><span class="line">headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);</span><br></pre></td></tr></table></figure>
-
 <p>그리고 <em>LinkedMultiValueMap</em> 으로 폼 데이터를 감싼다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MultiValueMap&lt;String, String&gt; map= <span class="keyword">new</span> LinkedMultiValueMap&lt;&gt;();</span><br><span class="line">map.add(<span class="string">"id"</span>, <span class="string">"1"</span>);</span><br></pre></td></tr></table></figure>
-
 <p>다음은, <em>HttpEntity</em> 로 request를 빌드한다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HttpEntity&lt;MultiValueMap&lt;String, String&gt;&gt; request = <span class="keyword">new</span> HttpEntity&lt;&gt;(map, headers);</span><br></pre></td></tr></table></figure>
-
 <p>마지막으로 <em>postForEntity()</em> 를 호출한다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ResponseEntity&lt;String&gt; response = restTemplate.postForEntity(</span><br><span class="line">  fooResourceUrl+<span class="string">"/form"</span>, request , String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">  </span><br><span class="line">assertThat(response.getStatusCode(), is(HttpStatus.CREATED));</span><br></pre></td></tr></table></figure>
-<h2 id="Exception-Handling"><a href="#Exception-Handling" class="headerlink" title="Exception Handling"></a>Exception Handling</h2><p>RestTemplate 은 내부적으로 <strong><em>errorHandler</em></strong> 라는 필드를 가지고 있다.</p>
-<p>이 <em>errorHandler</em> 라는 녀석이 바로 HTTP 에러가 발생했을 때, 이를 처리하는 로직이 </p>
-<p>들어있는 객체이며, <strong><em>DefaultResponseErrorHandler</em></strong> 라는 클래스의 인스턴스로 초기화 되어있다.  </p>
+<h2 id="Exception-Handling">Exception Handling</h2>
+<p>RestTemplate 은 내부적으로 <em><strong>errorHandler</strong></em> 라는 필드를 가지고 있다.</p>
+<p>이 <em>errorHandler</em> 라는 녀석이 바로 HTTP 에러가 발생했을 때, 이를 처리하는 로직이</p>
+<p>들어있는 객체이며, <em><strong>DefaultResponseErrorHandler</strong></em> 라는 클래스의 인스턴스로 초기화 되어있다.</p>
 <p><em>DefaultResponseErrorHandler</em> 는 기본적으로 HTTP 에러가 발생했을 때</p>
 <p>다음 3가지 중 하나의 Exception 을 던진다.</p>
 <ol>
-<li>HttpClientErrorException - 4xx HTTP 상태 코드가 응답 됐을 때  </li>
-<li>HttpServerErrorException - 5xx HTTP 상태 코드강 응답 됐을 때  </li>
+<li>HttpClientErrorException - 4xx HTTP 상태 코드가 응답 됐을 때</li>
+<li>HttpServerErrorException - 5xx HTTP 상태 코드강 응답 됐을 때</li>
 <li>UnknownHttpStatusCodeException - 알 수 없는 HTTP 상태 코드가 응답 됐을 때</li>
 </ol>
-<p>위의 예외들은 모두 <strong><em>RestClientResponseException</em></strong>의 서브 클래스다.</p>
+<p>위의 예외들은 모두 <em><strong>RestClientResponseException</strong></em>의 서브 클래스다.</p>
 <p><strong>물론 가장 단순한 방법은 try/catch 문으로 모든 HTTP 메소드 호출부를 감싸는 것이다.</strong></p>
-<p>하지만 이 방법은 API 의 종류와 호출부가 많아지면 코드의 품질이 좋지 않아질 것이다. </p>
+<p>하지만 이 방법은 API 의 종류와 호출부가 많아지면 코드의 품질이 좋지 않아질 것이다.</p>
 <p>다른 좋은 방법은 없을까? 다행히도 스프링이 좋은 방법을 제공한다.</p>
-<h3 id="ResponseErrorHandler-인터페이스"><a href="#ResponseErrorHandler-인터페이스" class="headerlink" title="ResponseErrorHandler 인터페이스"></a>ResponseErrorHandler 인터페이스</h3><p><em>ResponseErrorHandler</em> 를 구현하는 클래스를 작성하여 </p>
+<h3 id="ResponseErrorHandler-인터페이스">ResponseErrorHandler 인터페이스</h3>
+<p><em>ResponseErrorHandler</em> 를 구현하는 클래스를 작성하여</p>
 <p><em>RestTemplate</em> 의 <em>setErrorHandler()</em> 로 앞서 작성한 에러 핸들러의 인스턴스를 세팅해줄 수 있다.</p>
 <p>일반적으로 에러 핸들러에서는 다음 둘 중 한가지 동작을 수행하게 된다.</p>
 <ol>
 <li>HTTP 응답에 따라서 우리의 앱에 맞는, 의미있는 Exception 을 던져준다.</li>
 <li>Exception 을 던지지 않고 HTTP 응답을 무시한 채 프로그램이 계속 실행 되도록 한다.</li>
 </ol>
-<p>참고로, <em>ResponseErrorHandler</em> 인터페이스를 구현하는 대신 </p>
+<p>참고로, <em>ResponseErrorHandler</em> 인터페이스를 구현하는 대신</p>
 <p>이미 <em>ResponseErrorHandler</em> 를 구현하고 있는 <em>DefaultResponseErrorHandler</em> 클래스를 상속받아도 된다.</p>
-<p>이러면 이미 <em>DefaultResponseErrorHandler</em> 에서 <em>hasError()</em> 메소드가 4xx/5xx 상태 코드를 받는 경우 </p>
+<p>이러면 이미 <em>DefaultResponseErrorHandler</em> 에서 <em>hasError()</em> 메소드가 4xx/5xx 상태 코드를 받는 경우</p>
 <p>true 를 반환하도록 구현되어 있기 때문에 직접 구현해줄 필요가 없어서 편하다.</p>
 <p>다음의 예제 코드를 보자.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyErrorHandler</span> <span class="keyword">implements</span> <span class="title">ResponseErrorHandler</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasError</span><span class="params">(ClientHttpResponse httpResponse)</span> </span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">          httpResponse.getStatusCode().series() == CLIENT_ERROR </span><br><span class="line">          || httpResponse.getStatusCode().series() == SERVER_ERROR);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleError</span><span class="params">(ClientHttpResponse httpResponse)</span> </span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (httpResponse.getStatusCode()</span><br><span class="line">          .series() == HttpStatus.Series.SERVER_ERROR) &#123;</span><br><span class="line">            <span class="comment">// handle SEVER_ERROR</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> My500ErrorException();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (httpResponse.getStatusCode()</span><br><span class="line">          .series() == HttpStatus.Series.CLIENT_ERROR) &#123;</span><br><span class="line">            <span class="comment">// handle CLIENT_ERROR</span></span><br><span class="line">            <span class="keyword">if</span> (httpResponse.getStatusCode() == HttpStatus.NOT_FOUND) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> NotFoundException();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> My400ErrorException();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>이렇게 작성한 에러 핸들러를 다음과 같이 RestTemplate 에 셋팅해 줄 수 있다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BarConsumerService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BarConsumerService</span><span class="params">(RestTemplateBuilder restTemplateBuilder)</span> </span>&#123;</span><br><span class="line">        RestTemplate restTemplate = restTemplateBuilder</span><br><span class="line">          .errorHandler(<span class="keyword">new</span> MyErrorHandler())</span><br><span class="line">          .build();</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Bar <span class="title">fetchBarById</span><span class="params">(String barId)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"/bars/4242"</span>, Bar<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="TestRestTemplate"><a href="#TestRestTemplate" class="headerlink" title="TestRestTemplate"></a>TestRestTemplate</h2><p><strong>TestRestTemplate</strong> 은 RestTemplate 의 유용한 대체제로서 Integration Test 시 유용하다.</p>
+<h2 id="TestRestTemplate">TestRestTemplate</h2>
+<p><strong>TestRestTemplate</strong> 은 RestTemplate 의 유용한 대체제로서 Integration Test 시 유용하다.</p>
 <p>내장 서버와 함께 @SpringBootTest 어노테이션을 사용중이라면, Test 클래스 내에서 @Autowired 되어 곧바로 사용할 수 있다.</p>
 <p>커스터마이징이 필요하다면 RestTemplateBuilder @Bean 을 사용하면 된다.</p>
 <p>RestTemplate과 다른점은, TestRestTemplate 은 RestTemplate 을 내장(composition)하며</p>
 <p>다음과 같은 추가 기능을 제공한다는 것이다.</p>
-<h3 id="Authentication"><a href="#Authentication" class="headerlink" title="Authentication"></a>Authentication</h3><ul>
+<h3 id="Authentication">Authentication</h3>
+<ul>
 <li>템플릿 생성 시 입력</li>
 </ul>
 <p>생성자 인자로 credentials 를 줄 수 있다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TestRestTemplate testRestTemplate</span><br><span class="line"> = <span class="keyword">new</span> TestRestTemplate(<span class="string">"user"</span>, <span class="string">"passwd"</span>);</span><br><span class="line">ResponseEntity&lt;String&gt; response = testRestTemplate.</span><br><span class="line">  getForEntity(URL_SECURED_BY_AUTHENTICATION, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">  </span><br><span class="line">assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li>템플릿 생성 후 입력</li>
 </ul>
 <p>이미 템플릿을 생성한 후에도 가능하다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TestRestTemplate testRestTemplate = <span class="keyword">new</span> TestRestTemplate();</span><br><span class="line">ResponseEntity&lt;String&gt; response = testRestTemplate.withBasicAuth(</span><br><span class="line">  <span class="string">"user"</span>, <span class="string">"passwd"</span>).getForEntity(URL_SECURED_BY_AUTHENTICATION, </span><br><span class="line">  String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">  </span><br><span class="line">assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));</span><br></pre></td></tr></table></figure>
-
-<h3 id="HttpClientOption"><a href="#HttpClientOption" class="headerlink" title="HttpClientOption"></a>HttpClientOption</h3><p>TestRestTemplate 내 ENUM 형태로 존재하는 HttpClientOption 을 통해 내부의 HTTP Client 를 커스터마이징할 수 있다.</p>
+<h3 id="HttpClientOption">HttpClientOption</h3>
+<p>TestRestTemplate 내 ENUM 형태로 존재하는 HttpClientOption 을 통해 내부의 HTTP Client 를 커스터마이징할 수 있다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TestRestTemplate testRestTemplate = <span class="keyword">new</span> TestRestTemplate(<span class="string">"user"</span>, </span><br><span class="line">  <span class="string">"passwd"</span>, TestRestTemplate.HttpClientOption.ENABLE_COOKIES);</span><br><span class="line">ResponseEntity&lt;String&gt; response = testRestTemplate.</span><br><span class="line">  getForEntity(URL_SECURED_BY_AUTHENTICATION, String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">  </span><br><span class="line">assertThat(response.getStatusCode(), equalTo(HttpStatus.OK))</span><br></pre></td></tr></table></figure>
-
 <p>만약 인증이 필요하지 않다면 단순히 이렇게 할 수도 있다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TestRestTemplate(TestRestTemplate.HttpClientOption.ENABLE_COOKIES)</span><br></pre></td></tr></table></figure>
-
-<h2 id="RestTemplate-의-Wrapper"><a href="#RestTemplate-의-Wrapper" class="headerlink" title="RestTemplate 의 Wrapper"></a>RestTemplate 의 Wrapper</h2><p>몇가지 생성자와 메소드를 통한 추가적인 기능 뿐만 아니라, TestRestTemplate 은 RestTemplate 의 Wrapper 의 역할도 할 수 있다.<br>이는 레거시 코드로 인해 꼭 RestTemplate 을 써야만 하는 경우에 유용하다.</p>
-<h2 id="WebClient-vs-RestTemplate"><a href="#WebClient-vs-RestTemplate" class="headerlink" title="WebClient vs RestTemplate"></a>WebClient vs RestTemplate</h2><p>WebClient 는 Spring5 에서 새롭게 등장한 클래스다.<br>Spring3 부터 지원되는 RestTemplate 가 블로킹 방식으로만 동작하는 반면,<br>WebClient 는 블로킹 뿐만 아니라 논블로킹으로도 동작하여 RestTemplate 의 대체제로 사용되고있다.</p>
-<h3 id="RestTemplate"><a href="#RestTemplate" class="headerlink" title="RestTemplate"></a>RestTemplate</h3><p>RestTemplate 은 블로킹 방식이며, <strong>내부적으로 Java Servlet API 를 사용하여 하나의 request 당 하나의 스레드를 점유</strong>하기 때문에 </p>
+<h2 id="RestTemplate-의-Wrapper">RestTemplate 의 Wrapper</h2>
+<p>몇가지 생성자와 메소드를 통한 추가적인 기능 뿐만 아니라, TestRestTemplate 은 RestTemplate 의 Wrapper 의 역할도 할 수 있다.<br>
+이는 레거시 코드로 인해 꼭 RestTemplate 을 써야만 하는 경우에 유용하다.</p>
+<h2 id="WebClient-vs-RestTemplate">WebClient vs RestTemplate</h2>
+<p>WebClient 는 Spring5 에서 새롭게 등장한 클래스다.<br>
+Spring3 부터 지원되는 RestTemplate 가 블로킹 방식으로만 동작하는 반면,<br>
+WebClient 는 블로킹 뿐만 아니라 논블로킹으로도 동작하여 RestTemplate 의 대체제로 사용되고있다.</p>
+<h3 id="RestTemplate">RestTemplate</h3>
+<p>RestTemplate 은 블로킹 방식이며, <strong>내부적으로 Java Servlet API 를 사용하여 하나의 request 당 하나의 스레드를 점유</strong>하기 때문에</p>
 <p>요청에 대한 응답이 늦어지는 경우 불필요하게 CPU 와 메모리 자원이 낭비될 수가 있다.</p>
 <p>또한, 잦은 컨텍스트 스위칭으로 성능에도 좋지않은 영향을 미칠 수도 있고</p>
 <p>스레드 풀의 스레드가 고갈될 수도 있다.</p>
-<h3 id="WebClient"><a href="#WebClient" class="headerlink" title="WebClient"></a>WebClient</h3><p>반면, WebClient 는 논블로킹 방식이기 때문에, 응답이 늦어지더라도 큰 문제가 없다.<br>WebClient 는 Spring WebFlux 라이브러리에 포함 되어있다.<br>내부적으로, WebClient 가 만든 task 를 Reactive framework 가 큐에 넣고, 응답이 왔을 때만 꺼내서 실행한다.<br>Reactive framework 는 Java 9의 Reactive Streams API를 통해 비동기 로직을 조립할 수 있게 해준다.  </p>
-<p>참고1: <a href="https://www.baeldung.com/rest-template">https://www.baeldung.com/rest-template</a><br>참고2: <a href="https://www.baeldung.com/spring-webclient-resttemplate">https://www.baeldung.com/spring-webclient-resttemplate</a><br>참고3: <a href="https://www.baeldung.com/spring-rest-template-error-handling">https://www.baeldung.com/spring-rest-template-error-handling</a><br>참고4: <a href="https://www.baeldung.com/spring-boot-testresttemplate">https://www.baeldung.com/spring-boot-testresttemplate</a></p>
+<h3 id="WebClient">WebClient</h3>
+<p>반면, WebClient 는 논블로킹 방식이기 때문에, 응답이 늦어지더라도 큰 문제가 없다.<br>
+WebClient 는 Spring WebFlux 라이브러리에 포함 되어있다.<br>
+내부적으로, WebClient 가 만든 task 를 Reactive framework 가 큐에 넣고, 응답이 왔을 때만 꺼내서 실행한다.<br>
+Reactive framework 는 Java 9의 Reactive Streams API를 통해 비동기 로직을 조립할 수 있게 해준다.</p>
+<p>참고1: <a href="https://www.baeldung.com/rest-template">https://www.baeldung.com/rest-template</a><br>
+참고2: <a href="https://www.baeldung.com/spring-webclient-resttemplate">https://www.baeldung.com/spring-webclient-resttemplate</a><br>
+참고3: <a href="https://www.baeldung.com/spring-rest-template-error-handling">https://www.baeldung.com/spring-rest-template-error-handling</a><br>
+참고4: <a href="https://www.baeldung.com/spring-boot-testresttemplate">https://www.baeldung.com/spring-boot-testresttemplate</a></p>
 </div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=5ea69e998fb91e001b32120c&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/07/06/spring-profiles/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Spring 의 Profiles</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/07/05/software-craftman/"><span class="level-item">&#039;소프트웨어 장인&#039; 리뷰</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
             this.page.url = 'http://sgc109.github.io/2020/07/06/rest-template/';
             this.page.identifier = 'rest-template';
