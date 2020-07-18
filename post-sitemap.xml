@@ -8,8 +8,16 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/</loc>
-        <lastmod>2020-07-18T13:33:25.910Z</lastmod>
+        <loc>http://sgc109.github.io/2020/07/19/head-first-design-patterns/</loc>
+        <lastmod>2020-07-18T17:43:58.274Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2020/07/07/spring-boot-configuration-properties/</loc>
+        <lastmod>2020-07-18T16:43:03.726Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -17,7 +25,15 @@
 
     <url>
         <loc>http://sgc109.github.io/2020/07/05/software-craftman/</loc>
-        <lastmod>2020-07-18T13:05:17.512Z</lastmod>
+        <lastmod>2020-07-18T16:24:22.759Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/</loc>
+        <lastmod>2020-07-18T14:12:02.458Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -66,14 +82,6 @@
     <url>
         <loc>http://sgc109.github.io/2020/07/06/spring-properties/</loc>
         <lastmod>2020-07-10T05:27:16.746Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/07/07/spring-boot-configuration-properties/</loc>
-        <lastmod>2020-07-10T05:27:08.454Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
