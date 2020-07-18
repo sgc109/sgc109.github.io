@@ -8,16 +8,24 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2020/07/16/git-submodule/</loc>
-        <lastmod>2020-07-18T12:52:54.989Z</lastmod>
+        <loc>http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/</loc>
+        <lastmod>2020-07-18T13:33:25.910Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/</loc>
-        <lastmod>2020-07-18T12:04:41.382Z</lastmod>
+        <loc>http://sgc109.github.io/2020/07/05/software-craftman/</loc>
+        <lastmod>2020-07-18T13:05:17.512Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2020/07/16/git-submodule/</loc>
+        <lastmod>2020-07-18T12:52:54.989Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -66,14 +74,6 @@
     <url>
         <loc>http://sgc109.github.io/2020/07/07/spring-boot-configuration-properties/</loc>
         <lastmod>2020-07-10T05:27:08.454Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/07/05/software-craftman/</loc>
-        <lastmod>2020-07-09T14:25:50.860Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

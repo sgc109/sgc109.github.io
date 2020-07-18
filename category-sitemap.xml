@@ -8,6 +8,27 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/categories/Concepts/Design-Pattern/</loc>
+        <lastmod>2020-07-18T13:33:25.910Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/Concepts/</loc>
+        <lastmod>2020-07-18T13:33:25.910Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/Books/</loc>
+        <lastmod>2020-07-18T13:05:17.512Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/categories/Tools/Git/</loc>
         <lastmod>2020-07-18T12:52:54.989Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -22,20 +43,6 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/categories/Concepts/Design-Pattern/</loc>
-        <lastmod>2020-07-18T12:04:41.382Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Concepts/</loc>
-        <lastmod>2020-07-18T12:04:41.382Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://sgc109.github.io/categories/Server/Spring/</loc>
         <lastmod>2020-07-18T08:26:54.458Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -45,13 +52,6 @@
     <url>
         <loc>http://sgc109.github.io/categories/Server/</loc>
         <lastmod>2020-07-18T08:26:54.458Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Books/</loc>
-        <lastmod>2020-07-09T14:25:50.860Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
