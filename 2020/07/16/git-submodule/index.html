@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Git 의 서브모듈(Submodule) - 기억저장소</title><meta description="Git 의 서브모듈(Submodule) 이란 하나의 저장소 안에 있는 또 다른 별개의 저장소이다. 보통 다른 원격 저장소를 가져와(pull) 서브모듈로 사용하게 된다. 본 포스트에서는 Git 의 서브모듈에 대해 알아본다."><meta property="og:type" content="blog"><meta property="og:title" content="Git 의 서브모듈(Submodule)"><meta property="og:url" content="http://sgc109.github.io/2020/07/16/git-submodule/"><meta property="og:site_name" content="기억저장소"><meta property="og:description" content="Git 의 서브모듈(Submodule) 이란 하나의 저장소 안에 있는 또 다른 별개의 저장소이다. 보통 다른 원격 저장소를 가져와(pull) 서브모듈로 사용하게 된다. 본 포스트에서는 Git 의 서브모듈에 대해 알아본다."><meta property="og:locale" content="en_US"><meta property="og:image" content="http://sgc109.github.io/images/git-submodule/thumbnail.jpg"><meta property="article:published_time" content="2020-07-15T15:19:01.000Z"><meta property="article:modified_time" content="2020-07-20T15:27:19.168Z"><meta property="article:author" content="Sungho Hwang"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/images/git-submodule/thumbnail.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://sgc109.github.io/2020/07/16/git-submodule/"},"headline":"기억저장소","image":["http://sgc109.github.io/images/git-submodule/thumbnail.jpg"],"datePublished":"2020-07-15T15:19:01.000Z","dateModified":"2020-07-20T15:27:19.168Z","author":{"@type":"Person","name":"Sungho Hwang"},"description":"Git 의 서브모듈(Submodule) 이란 하나의 저장소 안에 있는 또 다른 별개의 저장소이다. 보통 다른 원격 저장소를 가져와(pull) 서브모듈로 사용하게 된다. 본 포스트에서는 Git 의 서브모듈에 대해 알아본다."}</script><link rel="canonical" href="http://sgc109.github.io/2020/07/16/git-submodule/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" type="text/css"><link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet" type="text/css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-172530521-1" async></script><script>window.dataLayer = window.dataLayer || [];
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Git 의 서브모듈(Submodule) - 기억저장소</title><meta description="Git 의 서브모듈(Submodule) 이란 하나의 저장소 안에 있는 또 다른 별개의 저장소이다. 보통 다른 원격 저장소를 가져와(pull) 서브모듈로 사용하게 된다. 본 포스트에서는 Git 의 서브모듈에 대해 알아본다."><meta property="og:type" content="blog"><meta property="og:title" content="Git 의 서브모듈(Submodule)"><meta property="og:url" content="http://sgc109.github.io/2020/07/16/git-submodule/"><meta property="og:site_name" content="기억저장소"><meta property="og:description" content="Git 의 서브모듈(Submodule) 이란 하나의 저장소 안에 있는 또 다른 별개의 저장소이다. 보통 다른 원격 저장소를 가져와(pull) 서브모듈로 사용하게 된다. 본 포스트에서는 Git 의 서브모듈에 대해 알아본다."><meta property="og:locale" content="en_US"><meta property="og:image" content="http://sgc109.github.io/images/git-submodule/thumbnail.jpg"><meta property="article:published_time" content="2020-07-15T15:19:01.000Z"><meta property="article:modified_time" content="2020-07-20T15:39:39.696Z"><meta property="article:author" content="Sungho Hwang"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/images/git-submodule/thumbnail.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://sgc109.github.io/2020/07/16/git-submodule/"},"headline":"기억저장소","image":["http://sgc109.github.io/images/git-submodule/thumbnail.jpg"],"datePublished":"2020-07-15T15:19:01.000Z","dateModified":"2020-07-20T15:39:39.696Z","author":{"@type":"Person","name":"Sungho Hwang"},"description":"Git 의 서브모듈(Submodule) 이란 하나의 저장소 안에 있는 또 다른 별개의 저장소이다. 보통 다른 원격 저장소를 가져와(pull) 서브모듈로 사용하게 된다. 본 포스트에서는 Git 의 서브모듈에 대해 알아본다."}</script><link rel="canonical" href="http://sgc109.github.io/2020/07/16/git-submodule/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" type="text/css"><link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet" type="text/css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-172530521-1" async></script><script>window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
     
@@ -16,14 +16,14 @@
 <p>myblog 디렉터리에서 chat-module 저장소를 서브모듈로 사용하기 위해 다음 명령어를 사용한다.</p>
 <figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule add https://github.com/sgc109/chat-module.git</span><br></pre></td></tr></table></figure>
 <p>그럼 아래와 같이 <strong>.gitmodules</strong> 와 <strong>chat-module/</strong> (<strong>Chat.java</strong> 와 함께)가 생성되어 스테이징 된다.</p>
-<p><img src="/images/git-submodule/1.png" alt=""></p>
+<p><img src="/images/git-submodule/1.png" alt="메인 프로젝트에 서브모듈 추가하기"></p>
 <p>이때 <strong>.gitmodules</strong> 파일을 열어보면 다음과 같이 서브모듈에 대한 정보(이름, 경로, 원격 저장소 url)가 적혀있다.</p>
-<p><img src="/images/git-submodule/2.png" alt=""></p>
+<p><img src="/images/git-submodule/2.png" alt="서브모듈 추가 시 자동 생성된 .gitmodules 파일의 내용"></p>
 <p>또, 루트 디렉터리에서 <code>git diff --cached chat-module</code> 를 실행하면, (참고로, --cached 와 --staged 는 같다)</p>
 <p>다음과 같이 서브 디렉터리 내 모든 파일에 대한 정보가 자세히 나오는 것이 아니라 어떤 하나의 커밋에 대한 정보만 적혀있다.</p>
 <p><img src="/images/git-submodule/3.png" alt=""></p>
 <p>아래와 같이 스테이징된 변경사항을 commit 해보면,</p>
-<p><img src="/images/git-submodule/5.png" alt=""></p>
+<p><img src="/images/git-submodule/5.png" alt="서브 모듈 추가 후 Commit 했을 때의 출력 화면"></p>
 <p>일반적인 파일처럼 <code>100xxx</code> 의 형태로 표시되는 <strong>.gitmodules</strong> 와는 달리</p>
 <p><strong>chat-module</strong> 디렉터리는 <code>160000</code> 의 형태로 하나의 특수한 파일로 인식한다는 것을 확인할 수 있다.</p>
 <p>해당 커밋을 Github 에 push 하면 서브모듈은 다음과 같은 아이콘으로 표시된다.</p>
@@ -45,7 +45,7 @@
 <p>혹은, 애초에 clone 을 할 때 <code>--recurse-submodules</code> 옵션을 주면</p>
 <p>굳이 모든 서브모듈 디렉터리에서 2개의 추가 명령어를 실행하지 않아도 한방에 초기화를 할 수 있다.</p>
 <figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone --recurse-submodules https://github.com/sgc109/myblog.git</span><br></pre></td></tr></table></figure>
-<p><img src="/images/git-submodule/10.png" alt=""></p>
+<p><img src="/images/git-submodule/10.png" alt="git clone 시 옵션으로 한 번에 서브모듈 초기화 하기"></p>
 <h2 id="서브모듈-포함한-프로젝트-작업">서브모듈 포함한 프로젝트 작업</h2>
 <h3 id="서브모듈-업데이트하기">서브모듈 업데이트하기</h3>
 <p>만약 다른 개발자가 채팅 모듈에 <strong>Message.java</strong> 를 추가하여</p>
@@ -53,11 +53,11 @@
 <p>그럼 <strong>chat-module</strong> 서브모듈을 사용하는 <strong>myblog</strong> 로컬 저장소에서는 이를 반영해야 할 것이다.</p>
 <p>기본적인 방법은 서브모듈 디렉터리에서 다음 2가지 명령어를 입력하는 것이다.</p>
 <figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git fetch</span><br><span class="line">git merge origin/master</span><br></pre></td></tr></table></figure>
-<p><img src="/images/git-submodule/12.png" alt=""></p>
+<p><img src="/images/git-submodule/12.png" alt="2개의 명령어로 서브모듈 업데이트 하기"></p>
 <p>하지만 더 간단한 방법이 있다. 서브모듈 디렉터리에서 2개의 명령어를 입력하는 대신</p>
 <p>루트 디렉터리에서 다음 명령어를 입력하면 된다.</p>
 <figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git submodule update --remote chat-module</span><br></pre></td></tr></table></figure>
-<p><img src="/images/git-submodule/13.png" alt=""></p>
+<p><img src="/images/git-submodule/13.png" alt="1개의 명령어로 서브모듈 업데이트 하기"></p>
 <p>이때 만약 로컬에서도 서브모듈에 변경이 있는 경우에는 <code>--merge</code> 나 <code>--rebase</code> 옵션을 줘야한다.</p>
 <h3 id="기본-브랜치-변경하기">기본 브랜치 변경하기</h3>
 <p>참고로 지금까지의 명령어들은 기본적으로 서브모듈 원격 저장소의 <code>master</code> 브랜치를 기준으로 동작한다.</p>
@@ -71,9 +71,9 @@
 <p>이때 <code>--recurse-submodules</code> 라는 유용한 Push 옵션이 있다.</p>
 <figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git push --recurse-submodules=check</span><br><span class="line"></span><br><span class="line">git push --recurse-submodules=on-demand</span><br></pre></td></tr></table></figure>
 <p>이 옵션을 <code>check</code> 로 주면 서브모듈이 Push 되지 않았다면 메인 프로젝트의 Push 가 중단되며,</p>
-<p><img src="/images/git-submodule/17.png" alt=""></p>
+<p><img src="/images/git-submodule/17.png" alt="서브모듈 수정 후 메인 프로젝트 Push 시 옵션 주기(check)"></p>
 <p>옵션을 <code>on-demand</code> 로 주면 자동으로 서브모듈을 Push 한다.</p>
-<p><img src="/images/git-submodule/18.png" alt=""></p>
+<p><img src="/images/git-submodule/18.png" alt="서브모듈 수정 후 메인 프로젝트 Push 시 옵션 주기(on-demand)"></p>
 <p>물론 단순히 서브모듈 디렉터리에서 직접 Push 를 해주고 메인 프로젝트를 Push 할 수도 있다.</p>
 <h3 id="서브모듈-Merge-하기">서브모듈 Merge 하기</h3>
 <p>내가 서브모듈의 내용을 수정하고 있는데 다른 사람도 수정하여 Upstream 에 Push 했을 경우</p>
