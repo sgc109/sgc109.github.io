@@ -3,12 +3,12 @@
   xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>기억저장소</title>
+    <title>그냥 블로그</title>
     <link>http://sgc109.github.io/</link>
     
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
-    <description>기억저장소</description>
+    <description>그냥 블로그</description>
     <pubDate>Sun, 19 Jul 2020 04:33:10 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
