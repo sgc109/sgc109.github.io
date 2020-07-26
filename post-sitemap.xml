@@ -8,8 +8,24 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/2020/07/26/jpa-basic/</loc>
+        <lastmod>2020-07-26T13:42:24.232Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/2020/07/22/redis-resp-protocol/</loc>
-        <lastmod>2020-07-24T07:32:49.548Z</lastmod>
+        <lastmod>2020-07-26T10:38:35.681Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2020/07/10/maven-basic/</loc>
+        <lastmod>2020-07-26T08:04:56.813Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -50,14 +66,6 @@
     <url>
         <loc>http://sgc109.github.io/2020/07/05/software-craftman/</loc>
         <lastmod>2020-07-18T16:24:22.759Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/07/10/maven-basic/</loc>
-        <lastmod>2020-07-18T08:26:54.458Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
