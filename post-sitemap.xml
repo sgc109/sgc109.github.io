@@ -8,16 +8,32 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2020/07/26/jpa-basic/</loc>
-        <lastmod>2020-07-28T14:27:19.001Z</lastmod>
+        <loc>http://sgc109.github.io/2020/07/06/spring-profiles/</loc>
+        <lastmod>2020-07-29T15:12:21.634Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2020/07/22/redis-resp-protocol/</loc>
-        <lastmod>2020-07-26T10:38:35.681Z</lastmod>
+        <loc>http://sgc109.github.io/2020/07/06/rest-template/</loc>
+        <lastmod>2020-07-29T15:07:22.252Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2020/07/05/software-craftman/</loc>
+        <lastmod>2020-07-29T15:06:59.481Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2020/07/07/spring-boot-configuration-properties/</loc>
+        <lastmod>2020-07-29T15:05:43.996Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -25,7 +41,15 @@
 
     <url>
         <loc>http://sgc109.github.io/2020/07/10/maven-basic/</loc>
-        <lastmod>2020-07-26T08:04:56.813Z</lastmod>
+        <lastmod>2020-07-29T15:05:18.361Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2020/07/19/head-first-design-patterns/</loc>
+        <lastmod>2020-07-29T15:05:04.953Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -33,7 +57,23 @@
 
     <url>
         <loc>http://sgc109.github.io/2020/07/16/git-submodule/</loc>
-        <lastmod>2020-07-20T15:40:26.434Z</lastmod>
+        <lastmod>2020-07-29T15:05:04.948Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2020/07/22/redis-resp-protocol/</loc>
+        <lastmod>2020-07-29T15:04:28.006Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2020/07/26/jpa-basic/</loc>
+        <lastmod>2020-07-29T15:02:45.898Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -42,46 +82,6 @@
     <url>
         <loc>http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/</loc>
         <lastmod>2020-07-20T10:15:00.217Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/07/07/spring-boot-configuration-properties/</loc>
-        <lastmod>2020-07-19T07:54:52.617Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/07/19/head-first-design-patterns/</loc>
-        <lastmod>2020-07-19T04:33:10.460Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/07/05/software-craftman/</loc>
-        <lastmod>2020-07-18T16:24:22.759Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/07/06/rest-template/</loc>
-        <lastmod>2020-07-16T13:47:32.509Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/07/06/spring-profiles/</loc>
-        <lastmod>2020-07-12T16:06:09.833Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
