@@ -8,6 +8,34 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/categories/Technologies/</loc>
+        <lastmod>2020-07-29T15:37:34.777Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/Languages/Java/</loc>
+        <lastmod>2020-07-29T15:33:26.485Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/Languages/</loc>
+        <lastmod>2020-07-29T15:33:26.485Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/Books/</loc>
+        <lastmod>2020-07-29T15:14:27.270Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/categories/Server/Spring/</loc>
         <lastmod>2020-07-29T15:12:21.634Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -17,27 +45,6 @@
     <url>
         <loc>http://sgc109.github.io/categories/Server/</loc>
         <lastmod>2020-07-29T15:12:21.634Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Books/</loc>
-        <lastmod>2020-07-29T15:06:59.481Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Languages/Java/</loc>
-        <lastmod>2020-07-29T15:05:18.361Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Languages/</loc>
-        <lastmod>2020-07-29T15:05:18.361Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
