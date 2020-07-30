@@ -9,25 +9,8 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>그냥 블로그</description>
-    <pubDate>Wed, 29 Jul 2020 15:37:34 GMT</pubDate>
+    <pubDate>Wed, 29 Jul 2020 15:33:26 GMT</pubDate>
     <generator>http://hexo.io/</generator>
-    
-    <item>
-      <title>HDFS 란?</title>
-      <link>http://sgc109.github.io/2020/07/30/hdfs-basic/</link>
-      <guid>http://sgc109.github.io/2020/07/30/hdfs-basic/</guid>
-      <pubDate>Wed, 29 Jul 2020 15:20:42 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;&lt;code&gt;HDFS(Hadoop Distributed File System)&lt;/code&gt;은 하둡에서&lt;/p&gt;
-      
-      </description>
-      
-      
-      <content:encoded><![CDATA[<p><code>HDFS(Hadoop Distributed File System)</code>은 하둡에서</p><a id="more"></a>]]></content:encoded>
-      
-      <comments>http://sgc109.github.io/2020/07/30/hdfs-basic/#disqus_thread</comments>
-    </item>
     
     <item>
       <title>JPA 이해하기 (feat. ORM)</title>
