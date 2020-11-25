@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/2020/11/25/python-and-concurrency/</loc>
+        <lastmod>2020-11-25T14:05:51.510Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/2020/08/09/ddd-basic/</loc>
         <lastmod>2020-09-22T14:18:51.340Z</lastmod>
         <changefreq>weekly</changefreq>
