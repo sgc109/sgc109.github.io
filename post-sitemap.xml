@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/2020/07/22/redis-resp-protocol/</loc>
+        <lastmod>2020-11-25T19:40:06.822Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/2020/11/25/python-and-concurrency/</loc>
         <lastmod>2020-11-25T19:33:44.242Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -98,14 +106,6 @@
     <url>
         <loc>http://sgc109.github.io/2020/07/16/git-submodule/</loc>
         <lastmod>2020-07-29T15:05:04.948Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/07/22/redis-resp-protocol/</loc>
-        <lastmod>2020-07-29T15:04:28.006Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
