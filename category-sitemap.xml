@@ -8,6 +8,20 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/categories/Languages/Python/</loc>
+        <lastmod>2020-11-26T02:50:02.496Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/Languages/</loc>
+        <lastmod>2020-11-26T02:50:02.496Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/categories/Database/Redis/</loc>
         <lastmod>2020-11-25T19:40:06.822Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -17,20 +31,6 @@
     <url>
         <loc>http://sgc109.github.io/categories/Database/</loc>
         <lastmod>2020-11-25T19:40:06.822Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Languages/Python/</loc>
-        <lastmod>2020-11-25T19:33:44.242Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Languages/</loc>
-        <lastmod>2020-11-25T19:33:44.242Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
