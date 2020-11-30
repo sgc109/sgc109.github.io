@@ -9,7 +9,15 @@
 
     <url>
         <loc>http://sgc109.github.io/2020/11/30/boyer-moore-majority-vote-algorithm/</loc>
-        <lastmod>2020-11-30T03:16:43.755Z</lastmod>
+        <lastmod>2020-11-30T13:15:46.060Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/</loc>
+        <lastmod>2020-11-30T13:12:39.732Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -114,14 +122,6 @@
     <url>
         <loc>http://sgc109.github.io/2020/07/16/git-submodule/</loc>
         <lastmod>2020-07-29T15:05:04.948Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/</loc>
-        <lastmod>2020-07-20T10:15:00.217Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
