@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/2021/01/17/k8s-downward-api/</loc>
+        <lastmod>2021-01-17T14:12:37.237Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/2021/01/09/programming-in-scala/</loc>
         <lastmod>2021-01-11T14:29:43.580Z</lastmod>
         <changefreq>weekly</changefreq>
