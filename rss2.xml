@@ -3,12 +3,12 @@
   xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>그냥 블로그</title>
+    <title>Sungho&#39;s Devlog</title>
     <link>http://sgc109.github.io/</link>
     
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
-    <description>그냥 블로그</description>
+    <description>Sungho&#39;s Devlog</description>
     <pubDate>Sun, 24 Jan 2021 14:40:24 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
