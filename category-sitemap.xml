@@ -8,6 +8,20 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/categories/Cloud/Kubernetes/</loc>
+        <lastmod>2021-01-25T14:57:35.551Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/Cloud/</loc>
+        <lastmod>2021-01-25T14:57:35.551Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/categories/General/Design-Pattern/</loc>
         <lastmod>2021-01-25T14:42:15.277Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -31,20 +45,6 @@
     <url>
         <loc>http://sgc109.github.io/categories/General/Domain-Driven-Design/</loc>
         <lastmod>2021-01-25T14:41:41.743Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Cloud/Kubernetes/</loc>
-        <lastmod>2021-01-25T14:41:30.646Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Cloud/</loc>
-        <lastmod>2021-01-25T14:41:30.646Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
