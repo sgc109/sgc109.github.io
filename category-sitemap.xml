@@ -8,22 +8,43 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/categories/Cloud/Kubernetes/DevOps/</loc>
-        <lastmod>2021-01-25T14:37:18.543Z</lastmod>
+        <loc>http://sgc109.github.io/categories/General/Design-Pattern/</loc>
+        <lastmod>2021-01-25T14:42:15.277Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/General/</loc>
+        <lastmod>2021-01-25T14:42:15.277Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/General/Algorithms/</loc>
+        <lastmod>2021-01-25T14:41:48.938Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/General/Domain-Driven-Design/</loc>
+        <lastmod>2021-01-25T14:41:41.743Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://sgc109.github.io/categories/Cloud/Kubernetes/</loc>
-        <lastmod>2021-01-25T14:37:18.543Z</lastmod>
+        <lastmod>2021-01-25T14:41:30.646Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://sgc109.github.io/categories/Cloud/</loc>
-        <lastmod>2021-01-25T14:37:18.543Z</lastmod>
+        <lastmod>2021-01-25T14:41:30.646Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -66,34 +87,6 @@
     <url>
         <loc>http://sgc109.github.io/categories/Tools/</loc>
         <lastmod>2021-01-25T14:25:11.286Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/CS-General/Domain-Driven-Design/</loc>
-        <lastmod>2021-01-25T14:25:04.707Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/CS-General/</loc>
-        <lastmod>2021-01-25T14:25:04.707Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/CS-General/Design-Pattern/</loc>
-        <lastmod>2021-01-25T14:24:07.238Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/CS-General/Algorithms/</loc>
-        <lastmod>2021-01-25T14:23:56.067Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
