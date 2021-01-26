@@ -8,6 +8,22 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/2021/01/26/kubernetes-in-action-review/</loc>
+        <lastmod>2021-01-26T05:14:32.449Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2021/01/09/programming-in-scala/</loc>
+        <lastmod>2021-01-26T05:09:20.379Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/2021/01/23/api-server-security-in-k8s/</loc>
         <lastmod>2021-01-25T17:18:21.026Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -106,14 +122,6 @@
     <url>
         <loc>http://sgc109.github.io/2020/11/25/python-and-concurrency/</loc>
         <lastmod>2021-01-25T14:23:37.977Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2021/01/09/programming-in-scala/</loc>
-        <lastmod>2021-01-25T14:11:00.705Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

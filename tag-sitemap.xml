@@ -3,22 +3,43 @@
 
 
     <url>
+        <loc>http://sgc109.github.io/tags/Books/</loc>
+        <lastmod>2021-01-26T05:14:32.449Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/tags/DevOps/</loc>
-        <lastmod>2021-01-25T17:18:21.026Z</lastmod>
+        <lastmod>2021-01-26T05:14:32.449Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://sgc109.github.io/tags/Kubernetes/</loc>
-        <lastmod>2021-01-25T17:18:21.026Z</lastmod>
+        <lastmod>2021-01-26T05:14:32.449Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://sgc109.github.io/tags/Cloud/</loc>
-        <lastmod>2021-01-25T17:18:21.026Z</lastmod>
+        <lastmod>2021-01-26T05:14:32.449Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Functional-Programming/</loc>
+        <lastmod>2021-01-26T05:09:20.379Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Scala/</loc>
+        <lastmod>2021-01-26T05:09:20.379Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -124,27 +145,6 @@
     <url>
         <loc>http://sgc109.github.io/tags/Languages/</loc>
         <lastmod>2021-01-25T14:23:37.977Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/tags/Functional-Programming/</loc>
-        <lastmod>2021-01-25T14:11:00.705Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/tags/Scala/</loc>
-        <lastmod>2021-01-25T14:11:00.705Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/tags/Books/</loc>
-        <lastmod>2021-01-25T14:11:00.705Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
