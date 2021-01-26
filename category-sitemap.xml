@@ -8,22 +8,22 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/categories/Books/</loc>
-        <lastmod>2021-01-26T05:27:24.045Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://sgc109.github.io/categories/Cloud/Kubernetes/</loc>
-        <lastmod>2021-01-25T17:18:21.026Z</lastmod>
+        <lastmod>2021-01-26T05:34:14.291Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://sgc109.github.io/categories/Cloud/</loc>
-        <lastmod>2021-01-25T17:18:21.026Z</lastmod>
+        <lastmod>2021-01-26T05:34:14.291Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/Books/</loc>
+        <lastmod>2021-01-26T05:27:36.206Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
