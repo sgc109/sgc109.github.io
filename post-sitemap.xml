@@ -8,16 +8,16 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2021/01/23/api-server-security-in-k8s/</loc>
-        <lastmod>2021-01-26T05:34:14.291Z</lastmod>
+        <loc>http://sgc109.github.io/2021/01/26/kubernetes-in-action-review/</loc>
+        <lastmod>2021-01-27T08:59:09.571Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2021/01/26/kubernetes-in-action-review/</loc>
-        <lastmod>2021-01-26T05:27:36.206Z</lastmod>
+        <loc>http://sgc109.github.io/2021/01/23/api-server-security-in-k8s/</loc>
+        <lastmod>2021-01-26T05:34:14.291Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
