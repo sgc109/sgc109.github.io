@@ -8,6 +8,20 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/categories/Languages/Python/</loc>
+        <lastmod>2021-02-03T17:40:22.822Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/Languages/</loc>
+        <lastmod>2021-02-03T17:40:22.822Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/categories/Books/</loc>
         <lastmod>2021-02-03T11:06:48.325Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -94,20 +108,6 @@
     <url>
         <loc>http://sgc109.github.io/categories/Tools/</loc>
         <lastmod>2021-01-25T14:25:11.286Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Languages/Python/</loc>
-        <lastmod>2021-01-25T14:23:37.977Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Languages/</loc>
-        <lastmod>2021-01-25T14:23:37.977Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
