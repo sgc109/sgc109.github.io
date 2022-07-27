@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Redis 의 RESP 프로토콜 - Sungho&#039;s Blog</title><meta description="Redis 클라이언트는 Redis 서버에(보통 6379번 포트) TCP 커넥션을 맺어 통신을 하는데 RESP 라는 프로토콜을 사용하여 통신을 한다."><meta property="og:type" content="blog"><meta property="og:title" content="Redis 의 RESP 프로토콜"><meta property="og:url" content="http://sgc109.github.io/2020/07/22/redis-resp-protocol/"><meta property="og:site_name" content="Sungho&#039;s Blog"><meta property="og:description" content="Redis 클라이언트는 Redis 서버에(보통 6379번 포트) TCP 커넥션을 맺어 통신을 하는데 RESP 라는 프로토콜을 사용하여 통신을 한다."><meta property="og:locale" content="en_US"><meta property="og:image" content="http://sgc109.github.io/images/redis-resp-protocol/thumbnail.jpg"><meta property="article:published_time" content="2020-07-22T13:09:14.000Z"><meta property="article:modified_time" content="2022-07-23T13:35:53.455Z"><meta property="article:author" content="Sungho Hwang"><meta property="article:tag" content="DB"><meta property="article:tag" content="Redis"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/images/redis-resp-protocol/thumbnail.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://sgc109.github.io/2020/07/22/redis-resp-protocol/"},"headline":"Sungho's Blog","image":["http://sgc109.github.io/images/redis-resp-protocol/thumbnail.jpg"],"datePublished":"2020-07-22T13:09:14.000Z","dateModified":"2022-07-23T13:35:53.455Z","author":{"@type":"Person","name":"Sungho Hwang"},"description":"Redis 클라이언트는 Redis 서버에(보통 6379번 포트) TCP 커넥션을 맺어 통신을 하는데 RESP 라는 프로토콜을 사용하여 통신을 한다."}</script><link rel="canonical" href="http://sgc109.github.io/2020/07/22/redis-resp-protocol/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" type="text/css"><link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet" type="text/css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-172530521-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-172530521-1');</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><link rel="alternate" href="/rss2.xml" title="Sungho's Blog" type="application/rss+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/sungho.png" alt="Sungho&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/sgc109"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="thumbnail" src="/images/redis-resp-protocol/thumbnail.jpg" alt="Redis 의 RESP 프로토콜"></span></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-07-22T13:09:14.000Z" title="2020-07-22T13:09:14.000Z">2020-07-22</time><span class="level-item"><a class="link-muted" href="/categories/Database/">Database</a><span> / </span><a class="link-muted" href="/categories/Database/Redis/">Redis</a></span></div></div><h1 class="title is-3 is-size-4-mobile">Redis 의 RESP 프로토콜</h1><div class="content"><p><strong>Redis</strong> 클라이언트는 Redis 서버에(보통 6379번 포트) TCP 커넥션을 맺어 통신을 하는데 <code>RESP</code> 라는 프로토콜을 사용하여 통신을 한다.</p>
+<a id="more"></a>
+<h2 id="RESP-란">RESP 란?</h2>
+<p><code>RESP(REdis Serialization Protocol)</code> 는 Redis 클라이언트가 Redis 서버와 통신할 때 사용하는 프로토콜이다.</p>
+<p>RESP 는 Redis 1.2 버전에서 처음 소개되어 2.0 버전부터는 Redis 클라이언트가 구현해야만하는 표준 프로토콜이 되었다.</p>
+<p>(참고로 RESP 는 Redis 의 client-server 통신에만 사용되며, Redis Cluster 에서 노드간의 통신은 RESP 가 아닌 binary protocol 을<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> 사용한다.)</p>
+<p>RESP 는 꼭 Redis 가 아니더라도 <em>Client-Server</em> 방식으로 통신한다면 어디에서든 사용될 수 있는 프로토콜이다.</p>
+<p>꼭 TCP 에서 사용되어야 하는 것도 아니지만 Redis 에서는 TCP 로만 사용한다.</p>
+<p>RESP 는 다음 3가지 요소를 중점적으로 여기며 고안되었다.</p>
+<ul>
+<li>쉬운 구현</li>
+<li>빠른 파싱</li>
+<li>사람이 읽을 수 있어야 함</li>
+</ul>
+<p>위와 같은 장점에 더해, Redis 문서에 따르면 성능 또한 binary protocol 과 비슷한 수준이라고 한다.</p>
+<h2 id="Request-Response-모델">Request-Response 모델</h2>
+<p>Redis 는 기본적으로 다음의 2가지 경우를 제외하곤 <strong>Request-Response</strong> 모델을 사용한다.</p>
+<ul>
+<li>Pipelining
+<ul>
+<li>여러개의 명령어(Command) 를 한 번에 보내고 모든 답장이 올 때까지 기다린다.</li>
+</ul>
+</li>
+<li>Pub/Sub
+<ul>
+<li>어떤 Client 가 특정 channel 을 subscribe 하면 <em>push protocol</em> 로 전환되어 더이상 명령어를 보내지 않게 된다.</li>
+</ul>
+</li>
+</ul>
+<p>Redis 의 Request-Response 프로토콜은 다음과 같이 동작한다.</p>
+<ul>
+<li>클라이언트가 Bulk String 의 Array 타입으로 명령어를 서버로 전송한다.</li>
+<li>서버는 클라이언트가 보낸 명령어에 맞는 타입으로 응답들을 보낸다.</li>
+</ul>
+<h2 id="RESP-의-Data-Types">RESP 의 Data Types</h2>
+<p>RESP 에는 5가지의 데이터 타입이 존재한다.</p>
+<ul>
+<li><strong>Simple Strings</strong></li>
+<li><strong>Erros</strong></li>
+<li><strong>Integers</strong></li>
+<li><strong>Bulk Strings</strong></li>
+<li><strong>Arrays</strong></li>
+</ul>
+<p>서버와 클라이언트가 주고받는 메시지 내 데이터의 타입은 위 5가지 중 하나이다.</p>
+<p>데이터의 타입은 데이터의 첫번째 바이트를 통해 구분한다. 각 타입들의 첫번째 문자는 다음과 같다.</p>
+<ul>
+<li>Simple Strings 는 &quot;<b>+</b>&quot;</li>
+<li>Erros 는 &quot;<b>-</b>&quot;</li>
+<li>Integers 는 &quot;<b>:</b>&quot;</li>
+<li>Bulk Strings 는 &quot;<b>$</b>&quot;</li>
+<li>Arrays 는 &quot;<b>*</b>&quot;</li>
+</ul>
+<p>RESP 를 통해 오고가는 Request 와 Response는 항상 &quot;\r\n&quot; 로 끝난다.</p>
+<p>그럼 각각의 타입에 대해 자세히 알아보자.</p>
+<h3 id="Simple-Strings">Simple Strings</h3>
+<p>Simple Strings 타입은 binary-safe<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> 하지 않은 일반 문자열을 전송할 때 사용하는 데이터 타입이다.</p>
+<p>(binary-safe 한 문자열을 전송하기 위해서는 이후 설명할 <em>Bulk Strings</em> 타입으로 전송해야 한다.)</p>
+<p>앞서 설명한 것처럼 첫번째 바이트는 &quot;+&quot; 다. 뒤이어 문자열이 나오고 &quot;\r\n&quot; 으로 끝난다.</p>
+<p>참고로 문자열은 Newline 을 포함할 수 없다. 다음은 Simple Strings 타입을 전송한 예다.</p>
+<blockquote>
+<p>&quot;+OK\r\n&quot;</p>
+</blockquote>
+<h3 id="Errors">Errors</h3>
+<p>Errors 타입은 이름대로 에러 정보에 대한 타입이며, &quot;-&quot; 문자로 시작한다.</p>
+<p>강제는 아니지만 관습적으로 <code>&quot;-ERRORTYPE Description for the error&quot;</code> 와 같은 형태로 먼저 에러의 이름을 쓰고</p>
+<p>한 칸 띄운 뒤에 에러 발생 원인과 같은 더 자세한 설명을 적는다.</p>
+<p>클라이언트에서 이러한 타입의 데이터를 받으면, 에러 타입에 맞는 예외를 발생시키거나 false 를 반환하는 식으로 구현할 수 있겠다.</p>
+<p>다음은 Errors 타입 데이터를 전송한 예이다.</p>
+<blockquote>
+<p>&quot;-ERR unknown command 'foobar'\r\n&quot;<br>
+&quot;-WRONGTYPE Operation against a key holding the wrong kind of value\r\n&quot;</p>
+</blockquote>
+<h3 id="Integers">Integers</h3>
+<p>정수 형태의 데이터이며, &quot;:&quot; 문자로 시작한다.</p>
+<p>또한, 숫자의 크기는 signed 64 bit 범위 내여야 한다.</p>
+<p>대표적으로, <a href="https://redis.io/commands/incr">INCR</a>, <a href="https://redis.io/commands/llen">LLEN</a>, <a href="https://redis.io/commands/lastsave">LASTSAVE</a> 와 같은 명령어에 대한 응답으로 오는 데이터의 타입이 이 Integers 타입이다.</p>
+<p>일부 명령어(<a href="https://redis.io/commands/exists">EXISTS</a> 등) 에서는 true/false 의 의미로 이 Integers 타입의 1/0 을 쓰기도 한다.</p>
+<h3 id="Bulk-Strings">Bulk Strings</h3>
+<p>binary-safe 한 문자열을 나타낼 때 사용하는 타입이며, &quot;$&quot; 로 시작한다.</p>
+<p>&quot;$&quot; 에 이어 문자열의 길이가 주어지고, 그 다음 &quot;\r\n&quot;, 그리고 실제 문자열이 등장한다.</p>
+<p>즉, <code>&quot;$문자열길이\r\n문자열\r\n&quot;</code> 의 형태를 가진다. (e.g. <code>&quot;$6\r\nfoobar\r\n&quot;</code>)</p>
+<p>빈 문자열을 나타낼 때는 <code>&quot;$0\r\n\r\n&quot;</code> 를 사용한다.</p>
+<p>주의해야 할 점은, null 값을 나타낼 때는 <code>&quot;$-1\r\n&quot;</code> 를 사용한다는 것이다. 이것을 <strong>Null Bulk String</strong> 이라고 부른다.</p>
+<p>만약 Redis 서버에서 Null Bulk String 을 받았다면 클라이언트에서는, 예를 들어 C 라이브러리라면 <em>NULL</em> 을 반환해야하하고, Ruby 라이브러리라면 <em>nil</em> 을 반환해야 할 것이다.</p>
+<h3 id="Arrays">Arrays</h3>
+<p><strong>Arrays</strong> 는 첫번째 byte 로 &quot;*&quot; 를 가지며, 이어서 10진수로 배열의 크기와 &quot;\r\n&quot; 이 나온다.<br>
+또한, 배열 내 원소는 각각 특정한 타입을 가질 수가 있으며, 그 타입은 모두 달라도 된다.</p>
+<p>예를 들어 1 이라는 Integer, &quot;2&quot; 라는 Simple String, 그리고 &quot;bulk&quot; 라는 Bulk String 을 가지는 Arrays 타입의 Response 는 다음과 같은 형태를 띈다.</p>
+<blockquote>
+<p>&quot;*3\r\n:1\r\n+2\r\n$4\r\nbulk\r\n&quot;</p>
+</blockquote>
+<p>Null Array 의 경우에는 사이즈가 0인 Array 와 구분하기 위해 다음과 같이 표시한다.</p>
+<blockquote>
+<p>&quot;*-1\r\n&quot;</p>
+</blockquote>
+<p>예를 들어 <code>BLPOP</code> command 가 timeout 이 났을 때 위와 같은 응답을 줄 수 있다.<br>
+클라이언트는 서버로부터 Null Array 를 받으면 빈 배열이 아닌, null object 를 반환해야 한다.</p>
+<p>중첩된 형태, 즉 Arrays 의 Arrays 도 가능하다.<br>
+다음은 2개의 배열로 이루어진 배열이다. 편의상 알아보기 좋게 따옴표를 빼고 줄바꿈을 하였다.</p>
+<blockquote>
+<p>*2\r\n<br>
+*3\r\n<br>
+:1\r\n<br>
+:2\r\n<br>
+:3\r\n<br>
+*2\r\n<br>
++Foo\r\n<br>
+-Bar\r\n</p>
+</blockquote>
+<h2 id="Redis-서버에-Command-보낼-때">Redis 서버에 Command 보낼 때</h2>
+<p>맨 처음에 Redis 클라이언트가 서버에 명령어를 보낼 때 Bulk String 의 Array 타입으로 전송한다고 했다.</p>
+<p>만약 Redis 서버에 저장된 mylist 라는 List 데이터의 길이를 알고자 한다면 <code>LLEN mylist</code> 명령어를 사용할 것이다.</p>
+<p>그리고 서버는 이에 대한 응답으로 리스트의 길이를 반환할 것이다.</p>
+<p>이때 실제로 Client 와 Server 간에 오고간 데이터를 뜯어보면 다음과 같을 것이다. (편의상 줄을 바꿈)</p>
+<ul>
+<li>Client</li>
+</ul>
+<blockquote>
+<p>*2\r\n<br>
+$4\r\n<br>
+LLEN\r\n<br>
+$6\r\n<br>
+mylist\r\n</p>
+</blockquote>
+<ul>
+<li>Server</li>
+</ul>
+<blockquote>
+<p>:48293\r\n</p>
+</blockquote>
+<p>참고: <a href="https://redis.io/topics/protocol#resp-simple-strings">https://redis.io/topics/protocol#resp-simple-strings</a></p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>binary protocol 는 전송하고자 하는 데이터를 human readable 한 방식으로 인코딩하는 text protocol 과는 반대되는 개념이다. Text protocol 의 대표적인 예인 HTTP 는 &quot;200 OK&quot; 라는 상태 코드의 200 이라는 값을 나타낼 때 '2', '0', '0' 이라는 문자를 사용한다. 하지만 만약 200 을 binary protocol 로 전송한다면 단지 200을 binary 로 나타낸 값을 전송할 것이다. 그렇기 때문에 binary protocol 이 좀 더 compact 한 형태라는 것을 알 수 있다. <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>문자열이 binary-safe 하다는 말은 문자열 내에 그 어떤 문자가 등장하더라도 문자열의 일부로 인식된다는 뜻이다. 예를 들어, C 에서 문자열 중간에 널 문자가 있다면 이를 문자열의 일부로 여기는 것이 아니라 널 문자 이후의 문자열을 무시하게 되는데, 이는 binary-safe 하지 않은 문자열의 예시이다. Redis 의 Bulk Strings 타입은 binary-safe 하다. 맨 앞에 문자열의 길이가 주어지는데, 그 길이 만큼은 어떠한 문자가 등장하더라도 문자열의 일부로 인식하기 때문이다. <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+</div><div class="article-tags size-small mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/DB/">DB</a><a class="link-muted mr-2" rel="tag" href="/tags/Redis/">Redis</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=5ea69e998fb91e001b32120c&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/07/26/jpa-basic/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">JPA 이해하기 (feat. ORM)</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/07/19/head-first-design-patterns/"><span class="level-item">[책 리뷰] Head First Design Patterns</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://sgc109.github.io/2020/07/22/redis-resp-protocol/';
+            this.page.identifier = 'redis-resp-protocol';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'https-sgc109-github-io' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="is-flex" href="#RESP-란"><span class="mr-2">1</span><span>RESP 란?</span></a></li><li><a class="is-flex" href="#Request-Response-모델"><span class="mr-2">2</span><span>Request-Response 모델</span></a></li><li><a class="is-flex" href="#RESP-의-Data-Types"><span class="mr-2">3</span><span>RESP 의 Data Types</span></a><ul class="menu-list"><li><a class="is-flex" href="#Simple-Strings"><span class="mr-2">3.1</span><span>Simple Strings</span></a></li><li><a class="is-flex" href="#Errors"><span class="mr-2">3.2</span><span>Errors</span></a></li><li><a class="is-flex" href="#Integers"><span class="mr-2">3.3</span><span>Integers</span></a></li><li><a class="is-flex" href="#Bulk-Strings"><span class="mr-2">3.4</span><span>Bulk Strings</span></a></li><li><a class="is-flex" href="#Arrays"><span class="mr-2">3.5</span><span>Arrays</span></a></li></ul></li><li><a class="is-flex" href="#Redis-서버에-Command-보낼-때"><span class="mr-2">4</span><span>Redis 서버에 Command 보낼 때</span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/sungho.png" alt="Sungho&#039;s Blog" height="28"></a><p class="size-small"><span>&copy; 2022 Sungho Hwang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://sgc109.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to Top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

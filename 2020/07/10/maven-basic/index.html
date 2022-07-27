@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Maven 시작하기 - Sungho&#039;s Blog</title><meta description="Maven 은 Ant 의 대안으로 만들어진 자바용 프로젝트 관리 도구이다. 본 글에서는 메이븐의 핵심 용어인 Lifecycle, Phase, 그리고 Goal 에 대해 알아본다."><meta property="og:type" content="blog"><meta property="og:title" content="Maven 시작하기"><meta property="og:url" content="http://sgc109.github.io/2020/07/10/maven-basic/"><meta property="og:site_name" content="Sungho&#039;s Blog"><meta property="og:description" content="Maven 은 Ant 의 대안으로 만들어진 자바용 프로젝트 관리 도구이다. 본 글에서는 메이븐의 핵심 용어인 Lifecycle, Phase, 그리고 Goal 에 대해 알아본다."><meta property="og:locale" content="en_US"><meta property="og:image" content="http://sgc109.github.io/images/maven-basic/thumbnail.jpg"><meta property="article:published_time" content="2020-07-10T13:23:09.000Z"><meta property="article:modified_time" content="2022-07-23T13:35:53.455Z"><meta property="article:author" content="Sungho Hwang"><meta property="article:tag" content="Languages"><meta property="article:tag" content="Java"><meta property="article:tag" content="Maven"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/images/maven-basic/thumbnail.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://sgc109.github.io/2020/07/10/maven-basic/"},"headline":"Sungho's Blog","image":["http://sgc109.github.io/images/maven-basic/thumbnail.jpg"],"datePublished":"2020-07-10T13:23:09.000Z","dateModified":"2022-07-23T13:35:53.455Z","author":{"@type":"Person","name":"Sungho Hwang"},"description":"Maven 은 Ant 의 대안으로 만들어진 자바용 프로젝트 관리 도구이다. 본 글에서는 메이븐의 핵심 용어인 Lifecycle, Phase, 그리고 Goal 에 대해 알아본다."}</script><link rel="canonical" href="http://sgc109.github.io/2020/07/10/maven-basic/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" type="text/css"><link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet" type="text/css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-172530521-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-172530521-1');</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><link rel="alternate" href="/rss2.xml" title="Sungho's Blog" type="application/rss+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/sungho.png" alt="Sungho&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/sgc109"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="thumbnail" src="/images/maven-basic/thumbnail.jpg" alt="Maven 시작하기"></span></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-07-10T13:23:09.000Z" title="2020-07-10T13:23:09.000Z">2020-07-10</time><span class="level-item"><a class="link-muted" href="/categories/Languages/">Languages</a><span> / </span><a class="link-muted" href="/categories/Languages/Java/">Java</a></span></div></div><h1 class="title is-3 is-size-4-mobile">Maven 시작하기</h1><div class="content"><p><code>Maven</code> 은 Ant 의 대안으로 만들어진 자바용 프로젝트 관리 도구이다.</p>
+<p>본 글에서는 메이븐의 핵심 용어인 <strong>Lifecycle</strong>, <strong>Phase</strong>, 그리고 <strong>Goal</strong> 에 대해 알아본다.</p>
+<a id="more"></a>
+<h2 id="Maven-의-Lifecycles">Maven 의 Lifecycles</h2>
+<p>Maven 은 3개의 lifecycle 로 이루어져 있다.</p>
+<h3 id="default">default</h3>
+<p>프로젝트를 배포하기 위한 라이프 사이클</p>
+<h3 id="clean">clean</h3>
+<p>프로젝트를 클린하는 라이프 사이클</p>
+<h3 id="site">site</h3>
+<p>프로젝트의 사이트 문서를 만들기 위한 라이프 사이클</p>
+<h2 id="Maven-의-Phases">Maven 의 Phases</h2>
+<p>각각의 라이프 사이클은 여러개의 Phase 로 이루어져있다.</p>
+<p>예를 들어, <strong>default</strong> 라이프 사이클은 다음과 같은 phase 들로 이루어져 있다.</p>
+<ul>
+<li><code>validate</code> - 프로젝트가 올바른 상태인지, 그리고 필요한 정보들은 모두 있는지 검증한다</li>
+<li><code>compile</code> - 소스코드를 컴파일한다</li>
+<li><code>test</code> - 알맞은 유닛 테스트 프레임워크로 테스트한다. 이러한 테스트는 코드가 패키징되거나 배포되었을 것을 요구헤선 안된다</li>
+<li><code>package</code> - 컴파일된 파일을 JAR와 같이 배포 가능한 형태로 패키징한다.</li>
+<li><code>verify</code> - 통합 테스트를 수행한다</li>
+<li><code>install</code> - 로컬에서 다른 프로젝트의 의존성으로 사용될 수 있도록 이 패키지를 로컬 저장소에 인스톨한다</li>
+<li><code>deploy</code> - 패키지를 원격 저장소에 복사한다</li>
+</ul>
+<p>물론 위의 phase 말고도 <a href="http://maven.apache.org/ref/3.6.3/maven-core/lifecycles.html#default_Lifecycle">다른 phase</a> 들이 있다.</p>
+<p>만약 다음과 같은 명령어로 특정 phase 를 실행하고자 하면,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mvn verify</span><br></pre></td></tr></table></figure>
+<p><strong>default</strong> 라이프 사이클에 있는 phase 들을 <em>validate</em> 부터 <em>verify</em> 까지 순차적으로 실행한다.</p>
+<p>프로젝트 내에 서브 프로젝트들이 있다면 메이븐은 모든 서브 프로젝트들에 대해 같은 동작을 수행한다.</p>
+<p>보통 이름에 하이픈(-)이 붙은 Phase(<code>pre-*</code>, <code>post-*</code>, or <code>process-*</code>)들은 커맨드 라인에서 직접 호출되지 않는다.</p>
+<p>이 Phase 들은 외부에는 불필요한 중간 결과물을 만들기 때문이다.</p>
+<p>예를 들어, <code>integration-test</code> phase 에는 Jacoco 같은 코드 커버리지 툴이나 Tomcat, Docker 같은</p>
+<p>컨테이너 플러그인들이 <code>pre-integration-test</code> Phase 에 Goal 을 바인딩 하여 컨테이너 설정 등 환경 세팅을 하도록 하며,</p>
+<p><code>post-integration-test</code> Phase 에도 Goal 을 바인딩하여 커버리지 통계를 수집하거나 컨테이너를 해제하도록 한다.</p>
+<p>고로, 커맨드 라인에서 <code>integration-test</code> Phase 만 직접 호출하면 커버리지 레포트도 나오지 않으며, 톰캣 웹서버나 도커 인스턴스는 실행 중인 채로 남게 된다.</p>
+<h2 id="Maven-의-Goals">Maven 의 Goals</h2>
+<p>Goal 은 Phase 보다도 한 단계 하위 개념이며, 보통 <code>jacoco:report</code> 나 <code>spring-boot:run</code> 과 같이 <em>plugin:goal</em> 의 형태로 적는다.</p>
+<p>각각의 Goal 은 0개 이상의 Phase 에 포함되며,  각각의 Build Phase 는 0개 이상의 Goals 로 이루어진다.</p>
+<p>Phase 가 실행된다는 것은 Phase 에 속한 Goal 들이 실행된다는 의미다.</p>
+<p>메이븐 2.0.5 이상 버전에서 Phase 내 Goal 들은 POM 에 선언된 순서대로 실행된다.</p>
+<p>어떠한 Phase 에도 속하지 않은 Goal 은 Phase 가 실행될 때 자동으로 실행되는 것이 아니라</p>
+<p>다음의 <code>dependency:copy-dependencies</code> goal 과 같이 외부적에서 직접 명시하여 실행하는데 사용된다.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mvn clean dependency:copy-dependencies package</span><br></pre></td></tr></table></figure>
+<p>위와 같은 명령어를 실행하면 적어준 순서대로 <code>clean</code> phase 를 먼저 실행하고(물론 <em>clean</em> lifecycle 에서 <em>clean</em> phase 까지의 모든 phase 들을 순차적으로 실행한다는 뜻)</p>
+<p><code>dependency:copy-dependencies</code> goal 을 실행하고, 마지막으로 <code>package</code> phase 를 실행한다(마찬가지로 <em>default</em> lifecycle 에서 <em>package</em> phase 까지 순차적으로 실행)</p>
+<p>만약 특정 Phase 에 속한 Goal 이 하나도 없다면, 해당 Phase 는 실행되지 않는다.</p>
+<p>Plugins 을 통해 새로운 Goals 을 Phases 에 추가할 수도 있다. 예를 들어, Compiler 플러그인은 메인 코드를 컴파일하는<code>compile</code> Goal 과 테스트 코드를 컴파일하는 <code>testCompile</code> Goal 을 가지고 있다.</p>
+<p>다음은 POM 의 <build> 의 <plugins> 안에있는 특정 플러그인에 goals 을 설정해준 예다.</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"> <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mycompany.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>display-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">phase</span>&gt;</span>process-test-resources<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">goal</span>&gt;</span>time<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>참고: <a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html">http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html</a></p>
+</div><div class="article-tags size-small mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Languages/">Languages</a><a class="link-muted mr-2" rel="tag" href="/tags/Java/">Java</a><a class="link-muted mr-2" rel="tag" href="/tags/Maven/">Maven</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=5ea69e998fb91e001b32120c&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/07/16/git-submodule/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Git 의 서브모듈(Submodule)</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/07/09/spring-running-startup-logic/"><span class="level-item">Spring 애플리케이션 시작 시 실행되는 로직 작성하기</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://sgc109.github.io/2020/07/10/maven-basic/';
+            this.page.identifier = 'maven-basic';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'https-sgc109-github-io' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="is-flex" href="#Maven-의-Lifecycles"><span class="mr-2">1</span><span>Maven 의 Lifecycles</span></a><ul class="menu-list"><li><a class="is-flex" href="#default"><span class="mr-2">1.1</span><span>default</span></a></li><li><a class="is-flex" href="#clean"><span class="mr-2">1.2</span><span>clean</span></a></li><li><a class="is-flex" href="#site"><span class="mr-2">1.3</span><span>site</span></a></li></ul></li><li><a class="is-flex" href="#Maven-의-Phases"><span class="mr-2">2</span><span>Maven 의 Phases</span></a></li><li><a class="is-flex" href="#Maven-의-Goals"><span class="mr-2">3</span><span>Maven 의 Goals</span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/sungho.png" alt="Sungho&#039;s Blog" height="28"></a><p class="size-small"><span>&copy; 2022 Sungho Hwang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://sgc109.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to Top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

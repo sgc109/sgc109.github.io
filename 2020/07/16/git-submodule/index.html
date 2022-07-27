@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Git 의 서브모듈(Submodule) - Sungho&#039;s Blog</title><meta description="Git 의 서브모듈(Submodule) 이란 하나의 저장소 안에 있는 또 다른 별개의 저장소이다. 보통 다른 원격 저장소를 가져와(pull) 서브모듈로 사용하게 된다. 본 포스트에서는 Git 의 서브모듈에 대해 알아본다."><meta property="og:type" content="blog"><meta property="og:title" content="Git 의 서브모듈(Submodule)"><meta property="og:url" content="http://sgc109.github.io/2020/07/16/git-submodule/"><meta property="og:site_name" content="Sungho&#039;s Blog"><meta property="og:description" content="Git 의 서브모듈(Submodule) 이란 하나의 저장소 안에 있는 또 다른 별개의 저장소이다. 보통 다른 원격 저장소를 가져와(pull) 서브모듈로 사용하게 된다. 본 포스트에서는 Git 의 서브모듈에 대해 알아본다."><meta property="og:locale" content="en_US"><meta property="og:image" content="http://sgc109.github.io/images/git-submodule/thumbnail.jpg"><meta property="article:published_time" content="2020-07-15T15:19:01.000Z"><meta property="article:modified_time" content="2022-07-23T13:35:53.454Z"><meta property="article:author" content="Sungho Hwang"><meta property="article:tag" content="Tools"><meta property="article:tag" content="Git"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/images/git-submodule/thumbnail.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://sgc109.github.io/2020/07/16/git-submodule/"},"headline":"Sungho's Blog","image":["http://sgc109.github.io/images/git-submodule/thumbnail.jpg"],"datePublished":"2020-07-15T15:19:01.000Z","dateModified":"2022-07-23T13:35:53.454Z","author":{"@type":"Person","name":"Sungho Hwang"},"description":"Git 의 서브모듈(Submodule) 이란 하나의 저장소 안에 있는 또 다른 별개의 저장소이다. 보통 다른 원격 저장소를 가져와(pull) 서브모듈로 사용하게 된다. 본 포스트에서는 Git 의 서브모듈에 대해 알아본다."}</script><link rel="canonical" href="http://sgc109.github.io/2020/07/16/git-submodule/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" type="text/css"><link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet" type="text/css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-172530521-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-172530521-1');</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><link rel="alternate" href="/rss2.xml" title="Sungho's Blog" type="application/rss+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/sungho.png" alt="Sungho&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/sgc109"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="thumbnail" src="/images/git-submodule/thumbnail.jpg" alt="Git 의 서브모듈(Submodule)"></span></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-07-15T15:19:01.000Z" title="2020-07-15T15:19:01.000Z">2020-07-16</time><span class="level-item"><a class="link-muted" href="/categories/Tools/">Tools</a><span> / </span><a class="link-muted" href="/categories/Tools/Git/">Git</a></span></div></div><h1 class="title is-3 is-size-4-mobile">Git 의 서브모듈(Submodule)</h1><div class="content"><p>Git 의 <code>서브모듈(Submodule)</code> 이란 하나의 저장소 안에 있는 또 다른 별개의 저장소이다.</p>
+<p>보통 다른 원격 저장소를 가져와(pull) 서브모듈로 사용하게 된다.</p>
+<p>본 포스트에서는 Git 의 서브모듈에 대해 알아본다.</p>
+<a id="more"></a>
+<h2 id="서브모듈-시작하기">서브모듈 시작하기</h2>
+<p><strong>myblog</strong> 라는 프로젝트 디렉터리에서 <strong>블로그</strong>를 개발하다가,</p>
+<p><strong>chat-module</strong> 이라는 <strong>채팅 모듈</strong>을 원격 저장소에서 가져와 블로그 프로젝트에서 사용하고 싶다고 가정하자.</p>
+<p>현재 myblog 로컬 저장소에는 <strong>Comment.java</strong>, <strong>Post.java</strong> 2개의 파일이 있고,</p>
+<p>chat-module 원격 저장소에는 <strong>Chat.java</strong> 파일이 있다.</p>
+<p>myblog 디렉터리에서 chat-module 저장소를 서브모듈로 사용하기 위해 다음 명령어를 사용한다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line">git submodule add https://github.com/sgc109/chat-module.git</span><br></pre></td></tr></table></figure>
+<p>그럼 아래와 같이 <strong>.gitmodules</strong> 와 <strong>chat-module/</strong> (<strong>Chat.java</strong> 와 함께)가 생성되어 스테이징 된다.</p>
+<p><img src="/images/git-submodule/1.png" alt="메인 프로젝트에 서브모듈 추가하기"></p>
+<p>이때 <strong>.gitmodules</strong> 파일을 열어보면 다음과 같이 서브모듈에 대한 정보(이름, 경로, 원격 저장소 url)가 적혀있다.</p>
+<p><img src="/images/git-submodule/2.png" alt="서브모듈 추가 시 자동 생성된 .gitmodules 파일의 내용"></p>
+<p>또, 루트 디렉터리에서 <code>git diff --cached chat-module</code> 를 실행하면, (참고로, --cached 와 --staged 는 같다)</p>
+<p>다음과 같이 서브 디렉터리 내 모든 파일에 대한 정보가 자세히 나오는 것이 아니라 어떤 하나의 커밋에 대한 정보만 적혀있다.</p>
+<p><img src="/images/git-submodule/3.png" alt=""></p>
+<p>아래와 같이 스테이징된 변경사항을 commit 해보면,</p>
+<p><img src="/images/git-submodule/5.png" alt="서브 모듈 추가 후 Commit 했을 때의 출력 화면"></p>
+<p>일반적인 파일처럼 <code>100xxx</code> 의 형태로 표시되는 <strong>.gitmodules</strong> 와는 달리</p>
+<p><strong>chat-module</strong> 디렉터리는 <code>160000</code> 의 형태로 하나의 특수한 파일로 인식한다는 것을 확인할 수 있다.</p>
+<p>해당 커밋을 Github 에 push 하면 서브모듈은 다음과 같은 아이콘으로 표시된다.</p>
+<p><img src="/images/git-submodule/6.png" alt=""></p>
+<h2 id="서브모듈-포함한-프로젝트-Clone">서브모듈 포함한 프로젝트 Clone</h2>
+<p>팀 내 다른 개발자가 앞서 서브모듈을 포함하여 push 된 원격 저장소를 clone 하고 싶다고 하자.</p>
+<p>아래와 같이 <code>git clone</code> 명령어를 실행한다.</p>
+<p><img src="/images/git-submodule/7.png" alt="비어있는 서브모듈 디렉터리"></p>
+<p>보이는 것처럼 서브모듈 디렉터리 내 파일들은 하나도 가져오지 않는다.</p>
+<p>메인 프로젝트 입장에서 서브모듈은 사실 단지 현재 가리키는 커밋과 변경 여부만 적혀있는 하나의 파일에 불과하기 때문이다.</p>
+<p>서브모듈 디렉터리에서 변경사항을 만들고 상위 디렉터리에서 <code>git diff</code> 를 해보면 이 사실을 알 수 있다.</p>
+<p><img src="/images/git-submodule/8.png" alt="메인 프로젝트에서 서브모듈의 변경사항을 추적하는 방식"></p>
+<p>그래서 서브모듈 디렉터리에서 2가지 명령어를 추가로 실행해야 서브모듈의 파일을 모두 가져올 수 있다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line">git submodule init</span><br><span class="line">git submodule update</span><br></pre></td></tr></table></figure>
+<p><code>git submodule init</code> 은 서브모듈 디렉터리를 git 로컬 저장소로 초기화 해주고(<code>git init</code> 처럼)</p>
+<p><code>git submodule update</code> 는 서브모듈의 원격 저장소에서 파일을 가져온다. 최신 commit 을 가져 오는건 아니고</p>
+<p><em>.git/modules/chat-module/HEAD</em> 에 서브모듈이 어떤 커밋을 가리키는지 명시돼 있어서 해당 커밋을 가져온다.</p>
+<p><img src="/images/git-submodule/9.png" alt="서브모듈 초기화를 위한 2가지 추가 명령어"></p>
+<p>혹은, 애초에 clone 을 할 때 <code>--recurse-submodules</code> 옵션을 주면</p>
+<p>굳이 모든 서브모듈 디렉터리에서 2개의 추가 명령어를 실행하지 않아도 한방에 초기화를 할 수 있다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line">git clone --recurse-submodules https://github.com/sgc109/myblog.git</span><br></pre></td></tr></table></figure>
+<p><img src="/images/git-submodule/10.png" alt="git clone 시 옵션으로 한 번에 서브모듈 초기화 하기"></p>
+<h2 id="서브모듈-포함한-프로젝트-작업">서브모듈 포함한 프로젝트 작업</h2>
+<h3 id="서브모듈-업데이트하기">서브모듈 업데이트하기</h3>
+<p>만약 다른 개발자가 채팅 모듈에 <strong>Message.java</strong> 를 추가하여</p>
+<p><strong>chat-module</strong> 의 원격 저장소에 변경 사항을 push 했다고 가정하자.</p>
+<p>그럼 <strong>chat-module</strong> 서브모듈을 사용하는 <strong>myblog</strong> 로컬 저장소에서는 이를 반영해야 할 것이다.</p>
+<p>기본적인 방법은 서브모듈 디렉터리에서 다음 2가지 명령어를 입력하는 것이다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line">git fetch</span><br><span class="line">git merge origin/master</span><br></pre></td></tr></table></figure>
+<p><img src="/images/git-submodule/12.png" alt="2개의 명령어로 서브모듈 업데이트 하기"></p>
+<p>하지만 더 간단한 방법이 있다. 서브모듈 디렉터리에서 2개의 명령어를 입력하는 대신</p>
+<p>루트 디렉터리에서 다음 명령어를 입력하면 된다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line">git submodule update --remote chat-module</span><br></pre></td></tr></table></figure>
+<p><img src="/images/git-submodule/13.png" alt="1개의 명령어로 서브모듈 업데이트 하기"></p>
+<p>이때 만약 로컬에서도 서브모듈에 변경이 있는 경우에는 <code>--merge</code> 나 <code>--rebase</code> 옵션을 줘야한다.</p>
+<h3 id="기본-브랜치-변경하기">기본 브랜치 변경하기</h3>
+<p>참고로 지금까지의 명령어들은 기본적으로 서브모듈 원격 저장소의 <code>master</code> 브랜치를 기준으로 동작한다.</p>
+<p>만약 기본 브랜치를 예를 들어 <em>bugfix-chat</em> 로 변경하고 싶다면, 다음 명령어를 사용하면 된다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line">git config -f .gitmodules submodule.chat-module.branch bugfix-chat</span><br></pre></td></tr></table></figure>
+<h3 id="서브모듈-수정-사항-공유하기">서브모듈 수정 사항 공유하기</h3>
+<p><em>myblog</em> 에서 작업을 하다가 서브모듈인 <em>chat-module</em> 의 내용에 변경이 필요한 경우도 있을 것이다.</p>
+<p>이럴 때는 먼저 서브모듈의 내용을 원격 저장소에 반영한 뒤, 메인 프로젝트의 내용을 Push 해야한다.</p>
+<p>그렇지 않으면 메인 프로젝트를 Pull 한 다른 개발자들은 변경된 서브모듈의 내용을 알 수 없기 떄문이다.</p>
+<p>하지만 서브모듈의 내용을 Push 하는 것을 깜빡할 수도 있는데,</p>
+<p>이때 <code>--recurse-submodules</code> 라는 유용한 Push 옵션이 있다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line">git push --recurse-submodules=check</span><br><span class="line"></span><br><span class="line">git push --recurse-submodules=on-demand</span><br></pre></td></tr></table></figure>
+<p>이 옵션을 <code>check</code> 로 주면 서브모듈이 Push 되지 않았다면 메인 프로젝트의 Push 가 중단되며,</p>
+<p><img src="/images/git-submodule/17.png" alt="서브모듈 수정 후 메인 프로젝트 Push 시 옵션 주기 (check)"></p>
+<p>옵션을 <code>on-demand</code> 로 주면 자동으로 서브모듈을 Push 한다.</p>
+<p><img src="/images/git-submodule/18.png" alt="서브모듈 수정 후 메인 프로젝트 Push 시 옵션 주기 (on-demand)"></p>
+<p>물론 단순히 서브모듈 디렉터리에서 직접 Push 를 해주고 메인 프로젝트를 Push 할 수도 있다.</p>
+<h3 id="서브모듈-Merge-하기">서브모듈 Merge 하기</h3>
+<p>내가 서브모듈의 내용을 수정하고 있는데 다른 사람도 수정하여 Upstream 에 Push 했을 경우</p>
+<p>Pull 을 했다고 하자. 만약 서브모듈의 커밋이 단순히 Fast-Forward 관계라면 최신 커밋을 선택한다.</p>
+<p>하지만, 그렇지 않다면? 충돌이 발생하게 된다.</p>
+<p>이때 메인 디렉터리에서 <code>git diff</code> 명령을 통해 충돌이 난 서브모듈의 두 커밋의 SHA 해시 값을 알 수 있다.</p>
+<p>그럼 일단 Upstream 의 커밋으로 새로운 브랜치를 만들고, 서브모듈 디렉터리에서 Merge 를 한다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> chat-module</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch upstream-commit c771610</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git merge upstream-commit</span></span><br></pre></td></tr></table></figure>
+<p>그럼 물론 충돌이 발생하고, 이를 서브모듈 디렉터리에서 해결한 뒤 커밋을 하고,</p>
+<p>다시 메인 디렉터리로 가서 변경 사항을 스테이징에 올린 뒤 커밋을 하면 된다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add conflicted-file</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">'merged 2 commits in submodule'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">cd</span> ..</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add chat-module</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">'all merged in main directory'</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="서브모듈-팁">서브모듈 팁</h2>
+<h3 id="Foreach">Foreach</h3>
+<p>여러개의 서브모듈을 포함한 프로젝트에서 각 서브모듈에 공통적인 명령어를 수행하고 싶을 때가 있다.</p>
+<p>예를 들어 작업 도중 메인 프로젝트에서 다른 브랜치로 변경하고 싶은데</p>
+<p>메인 프로젝트와 여러 서브모듈에 스테이징은 됐지만 아직 Commit 하지 않은 변경사항이 있는 경우다.</p>
+<p>직접 모든 서브모듈 디렉터리에서 <code>git stash</code> 를 하기엔 너무 번거롭다.</p>
+<p>그럴 땐 다음과 같이 <code>foreach</code> 를 사용하면 유용하다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line">git stash; git submodule foreach 'git stash'</span><br></pre></td></tr></table></figure>
+<p>그리고 다음 명령어로 모든 서브모듈과 함께 새로운 브랜치로 이동할 수 있다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line">git checkout -b bugfix-post; git submodule foreach 'git checkout -b bugfix-post'</span><br></pre></td></tr></table></figure>
+<p>모든 서브모듈을 포함한 변경사항을 알고싶은 경우 다음과 같이 활용할 수도 있다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line">git diff; git submodule foreach 'git diff'</span><br></pre></td></tr></table></figure>
+<h3 id="Alias">Alias</h3>
+<p>앞서 살펴본 submodule 과 관련된 명령문은 너무 길다는 단점이 있다.</p>
+<p>이럴 땐 다음과 같이 서브모듈과 관련된 명령어들의 Alias 로 등록하면 편하다.</p>
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git config alias.sdiff <span class="string">'!'</span><span class="string">"git diff &amp;&amp; git submodule foreach 'git diff'"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config alias.spush <span class="string">'push --recurse-submodules=on-demand'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config alias.supdate <span class="string">'submodule update --remote --merge'</span></span></span><br></pre></td></tr></table></figure>
+<p>참고로 alias 설정에서 앞에 '!' 와 같이 느낌표가 붙으면 git 명령어가 아닌 shell 명령어라는 의미이다.</p>
+<p><em>참고: <a href="https://git-scm.com/book/ko/v2/Git-%EB%8F%84%EA%B5%AC-%EC%84%9C%EB%B8%8C%EB%AA%A8%EB%93%88">https://git-scm.com/book/ko/v2/Git-도구-서브모듈</a></em></p>
+</div><div class="article-tags size-small mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Tools/">Tools</a><a class="link-muted mr-2" rel="tag" href="/tags/Git/">Git</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=5ea69e998fb91e001b32120c&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/07/18/compound-pattern-feat-mvc/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Compound 패턴 (feat. MVC 패턴)</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/07/10/maven-basic/"><span class="level-item">Maven 시작하기</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://sgc109.github.io/2020/07/16/git-submodule/';
+            this.page.identifier = 'git-submodule';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'https-sgc109-github-io' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="is-flex" href="#서브모듈-시작하기"><span class="mr-2">1</span><span>서브모듈 시작하기</span></a></li><li><a class="is-flex" href="#서브모듈-포함한-프로젝트-Clone"><span class="mr-2">2</span><span>서브모듈 포함한 프로젝트 Clone</span></a></li><li><a class="is-flex" href="#서브모듈-포함한-프로젝트-작업"><span class="mr-2">3</span><span>서브모듈 포함한 프로젝트 작업</span></a><ul class="menu-list"><li><a class="is-flex" href="#서브모듈-업데이트하기"><span class="mr-2">3.1</span><span>서브모듈 업데이트하기</span></a></li><li><a class="is-flex" href="#기본-브랜치-변경하기"><span class="mr-2">3.2</span><span>기본 브랜치 변경하기</span></a></li><li><a class="is-flex" href="#서브모듈-수정-사항-공유하기"><span class="mr-2">3.3</span><span>서브모듈 수정 사항 공유하기</span></a></li><li><a class="is-flex" href="#서브모듈-Merge-하기"><span class="mr-2">3.4</span><span>서브모듈 Merge 하기</span></a></li></ul></li><li><a class="is-flex" href="#서브모듈-팁"><span class="mr-2">4</span><span>서브모듈 팁</span></a><ul class="menu-list"><li><a class="is-flex" href="#Foreach"><span class="mr-2">4.1</span><span>Foreach</span></a></li><li><a class="is-flex" href="#Alias"><span class="mr-2">4.2</span><span>Alias</span></a></li></ul></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/sungho.png" alt="Sungho&#039;s Blog" height="28"></a><p class="size-small"><span>&copy; 2022 Sungho Hwang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://sgc109.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to Top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Kubernetes 의 API 서버 보안 - Sungho&#039;s Blog</title><meta description="이 포스팅에서는 쿠버네티스에에서 API 서버의 보안과 아래의 리소스들에 대해 이야기한다.  ServiceAccount Role 과 RoleBinding ClusterRole 과 ClusterRoleBinding"><meta property="og:type" content="blog"><meta property="og:title" content="Kubernetes 의 API 서버 보안"><meta property="og:url" content="http://sgc109.github.io/2021/01/23/api-server-security-in-k8s/"><meta property="og:site_name" content="Sungho&#039;s Blog"><meta property="og:description" content="이 포스팅에서는 쿠버네티스에에서 API 서버의 보안과 아래의 리소스들에 대해 이야기한다.  ServiceAccount Role 과 RoleBinding ClusterRole 과 ClusterRoleBinding"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://sgc109.github.io/images/api-server-security-in-k8s/thumbnail.jpg"><meta property="article:published_time" content="2021-01-23T07:13:46.000Z"><meta property="article:modified_time" content="2022-07-23T13:35:53.453Z"><meta property="article:author" content="Sungho Hwang"><meta property="article:tag" content="Cloud"><meta property="article:tag" content="Kubernetes"><meta property="article:tag" content="DevOps"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/images/api-server-security-in-k8s/thumbnail.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://sgc109.github.io/2021/01/23/api-server-security-in-k8s/"},"headline":"Sungho's Blog","image":["http://sgc109.github.io/images/api-server-security-in-k8s/thumbnail.jpg"],"datePublished":"2021-01-23T07:13:46.000Z","dateModified":"2022-07-23T13:35:53.453Z","author":{"@type":"Person","name":"Sungho Hwang"},"description":"이 포스팅에서는 쿠버네티스에에서 API 서버의 보안과 아래의 리소스들에 대해 이야기한다.  ServiceAccount Role 과 RoleBinding ClusterRole 과 ClusterRoleBinding"}</script><link rel="canonical" href="http://sgc109.github.io/2021/01/23/api-server-security-in-k8s/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" type="text/css"><link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet" type="text/css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-172530521-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-172530521-1');</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><link rel="alternate" href="/rss2.xml" title="Sungho's Blog" type="application/rss+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/sungho.png" alt="Sungho&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/sgc109"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="thumbnail" src="/images/api-server-security-in-k8s/thumbnail.jpg" alt="Kubernetes 의 API 서버 보안"></span></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2021-01-23T07:13:46.000Z" title="2021-01-23T07:13:46.000Z">2021-01-23</time><span class="level-item"><a class="link-muted" href="/categories/Cloud/">Cloud</a><span> / </span><a class="link-muted" href="/categories/Cloud/Kubernetes/">Kubernetes</a></span></div></div><h1 class="title is-3 is-size-4-mobile">Kubernetes 의 API 서버 보안</h1><div class="content"><p>이 포스팅에서는 쿠버네티스에에서 <code>API 서버의 보안</code>과 아래의 리소스들에 대해 이야기한다.</p>
+<ul>
+<li><code>ServiceAccount</code></li>
+<li><code>Role</code> 과 <code>RoleBinding</code></li>
+<li><code>ClusterRole</code> 과 <code>ClusterRoleBinding</code></li>
+</ul>
+<a id="more"></a>
+<h2 id="쿠버네티스에서-API-서버-보안은-왜-필요할까">쿠버네티스에서 API 서버 보안은 왜 필요할까?</h2>
+<p>쿠버네티스에서는 이론적으로 파드 외부 또는 내부에서 API 서버로 적절한 요청을 하면 어떤 리소스던 생성, 삭제, 수정, 조회가 가능하다.</p>
+<p>그런데 만약 개발자의 코딩 실수로 어떤 파드에서 아무 관련이 없는 다른 파드를 삭제해버릴 수 있다면 큰 문제가 될 것이다.</p>
+<p>그렇기 때문에 사용자 또는 파드에게 적절하게 권한을 부여하는 기능은 보안과 안정적인 운영을 위해 필수적이다.</p>
+<p>회사에서 여러개의 팀이 하나의 공용 클러스터를 함께 사용하는 멀티테넌트 환경에서는 이러한 권한의 분리가 더욱 중요할 것이다.</p>
+<p>만약 어떤 팀에서 실행 중인 파드의 목록과 상세 정보를 다른 팀에서 볼 수 있고, 심지어 삭제할 수가 있다면 문제가 될 것이다.</p>
+<p>악의적인 목적이건, 실수이건 간에 위와 같은 일은 언제라도 벌어질 수 있기 때문에 모든 유저와 파드에게 적절한 권한을 부여해야 하는 것이다.</p>
+<p>쿠버네티스 클러스터는 보통 위와 같은 문제가 발생하지 않도록 하기 위해 API 서버가 사용자나 Pod 의 요청을 받을 때 명시적으로 설정된 권한만 허용하고, 그 이외의 모든 권한은 허용하지 않도록 동작한다.</p>
+<h2 id="Service-Account">Service Account</h2>
+<h3 id="Service-Account-란">Service Account 란?</h3>
+<p><strong>서비스 어카운트(Service Account)</strong> 는 Kubernetes 의 파드에서 API 서버에 요청을 보냈을 때 이 &quot;파드&quot;를 식별하기 위한 리소스다. (사용자를 식별하는데 사용되지는 않는다)</p>
+<p>파드에서 API 서버에 요청을 보내면 이 파드의 정체가 무엇인지 알아야 어떤 권한을 가지고 있는지도 알 수 있고,</p>
+<p>이를 기반으로 파드의 요청이 권한에 맞는지를 확인하여 요청을 처리해줄지 말지를 결정할 것이다.</p>
+<p>실제로 권한을 정의하고, 설정하는 부분은 이후에 설명할 <strong>Role, ClusterRole, RoleBinding, ClusterRoleBinding</strong> 의 역할이고,</p>
+<p>ServiceAccount 는 이러한 권한을 적용할 수 있는 주체 중 한가지로서, Pod 의 신분증같은 것이라고 생각하면된다.</p>
+<p>(물론 하나의 ServiceAccount 는 여러 Pod 가 사용할 수 있기 때문에 정확히 신분증과 동일한 개념은 아닐 것이다.)</p>
+<h3 id="ServiceAccount-의-특징">ServiceAccount 의 특징</h3>
+<p>모든 파드는 무조건 하나의 ServiceAccount 와 매핑이 되어야 실행될 수가 있다.</p>
+<p>그런데 ServiceAccount 를 만들지 않고, 파드의 매니페스트에 ServiceAccount 를 명시적으로 적어주지 않아도 파드가 잘 생성이 되고 실행 되는 것을 보고 의아할 수도 있다.</p>
+<p>사실 이것은, 쿠버네티스의 <strong>ServiceAccount Controller</strong> 가 모든 네임스페이스에 <code>default</code> 라는 이름의 서비스어카운트가 있도록 자동 생성해주며,</p>
+<p><code>ServiceAccount</code> <strong>Admission Controller</strong> 가 파드의 매니페스트에 명시적으로 서비스어카운트를 정의하지 않으면 <code>default</code> 서비스어카운트를 매핑해주기 때문에 가능한것이다.</p>
+<p>뿐만 아니라, 서비스어카운트는 mountable secrets 에 지정한 시크릿만 파드에 마운트할 수 있도록 강제하는 기능과,</p>
+<p>Image pull secrets 기능을 통해 프라이빗 이미지 레지스트리에서 이미지를 가져올 수 있도록 하기 위한 시크릿을 이 서비스어카운트를 사용하는 파드에 자동으로 마운트시켜주는 기능도 가지고 있는데</p>
+<p>image pull secrets 기능도 <code>ServiceAccount</code> Admission Controller 가 수행한다.</p>
+<h3 id="ServiceAccount-의-동작-방식">ServiceAccount 의 동작 방식</h3>
+<p><code>kubectl create sa &lt;name&gt;</code> 명령어로 서비스어카운트를 생성할 수 있다.</p>
+<p><strong>Token Controller</strong> 는 서비스어카운트가 생성될 때마다 자동으로 <code>kubernetes.io/service-account-token</code> 타입의 Secret 을 생성하여 매핑시켜준다.</p>
+<p><img src="/images/api-server-security-in-k8s/create-service-account.png" alt="서비스어카운트 만들기"></p>
+<p>Token Controller 에 의해 생성된 Secret 에는 아래와 같은 3가지 데이터가 base64 로 인코딩되어 들어있다.</p>
+<ul>
+<li>ca.crt - API 서버와 통신 시, SSL 인증을 위한 증명서</li>
+<li>token - 서비스어카운트 이름, Secret 이름 등의 정보에 서명한 JWT. API 서버에 요청시 Bearer 토큰으로 사용됨</li>
+<li>namespace - 네임스페이스</li>
+</ul>
+<p>파드 내 애플리케이션은 위의 데이터를 사용하여 API 서버와 통신한다.</p>
+<p>API 서버는 요청의 Authorization 헤더에 있는 Bearer token 을 디코딩하여 어느 서비스어카운트를 사용해 보낸 요청인지 식별하게 된다.</p>
+<h2 id="RBAC-란">RBAC 란?</h2>
+<p>어떤 사람, 혹은 파드가 API 서버에 요청을 하면 API 서버는 인증(Authentication)과 인가(Authorization)를 수행한다.</p>
+<p>인증은 접근 가능 여부를 확인하는 것이고, 인가는 접근 가능한 요청에 대해 요청된 자원에 접근할 수 있는지를 확인하는 것이다.</p>
+<p><strong>RBAC(Role-Based Access Control)</strong> 는 API 서버가 인가를 수행하는 여러 방법 중 하나다.</p>
+<p>쿠버네티스는 다음과 같은 인가 방식을 제공한다.</p>
+<ul>
+<li>Node
+<ul>
+<li>Kubelet 에 의한 요청에 대한 인가를 위한 방식</li>
+</ul>
+</li>
+<li>ABAC(Attribute-Based Access Control)
+<ul>
+<li>리소스의 속성에 따라 인가를 하는 방식</li>
+</ul>
+</li>
+<li>RBAC
+<ul>
+<li>Role 을 기반으로 인가를 하는 방식</li>
+</ul>
+</li>
+<li>Webhook
+<ul>
+<li>외부 API 를 통해 인가를 하는 방식</li>
+</ul>
+</li>
+</ul>
+<p>이 중에서 RBAC가 표준이며, 1.8.0 부터는 대부분의 클러스터에서 기본적으로 사용하는 방식이다.</p>
+<p>RBAC 는 특정 <strong>주체(subject)</strong> 가 <strong>특정 대상(url, resource 타입, 혹은 특정 resource)</strong> 에 대해 <strong>특정 행위(verb)</strong> 를 할 수 있는지를 지정하는 방식이다.</p>
+<p>이를 어떻게 지정하는 지는 이후 Role 과 RoleBinding 에 대한 설명에서 명확해 질 것이다.</p>
+<h2 id="Role-과-RoleBinding">Role 과 RoleBinding</h2>
+<p>앞서 RBAC 는 특정 주체가 특정 대상에 대해 특정 행위를 할 수 있는지를 지정하는 방식이라고 했다.</p>
+<p>여기서 Role 에 <strong>대상(resource 등)</strong> 과 <strong>행위(verb)</strong> 를 지정하며, RoleBinding 에 <strong>주체(subject)</strong> 를 지정한다.</p>
+<p>여기서 주체는 3가지(User, Group, <strong>ServiceAccount</strong>) 중 한가지가 된다.</p>
+<p>대상은 보통 resource 의 타입을 정하는데, resourceName 으로 특정 리소스를 지정할 수도 있다.</p>
+<p>이후에 설명할 ClusterRole 에서는 리소스가 아닌 URL 을 지정할 수도 있다. <code>/healthz</code> 와 같이 특정 리소스에 대한 요청이 아닌 경우도 있기 때문이다.</p>
+<p>행위는 아래 표와같이 API 요청에 사용된 HTTP 메서드에 따라 특정 행위에 매핑되는데,</p>
+<table>
+<thead>
+<tr>
+<th>HTTP method</th>
+<th>verb</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td>create</td>
+</tr>
+<tr>
+<td>GET, HEAD</td>
+<td>get(개별 리소스), list(전체 오브젝트 내용을 포함한 리소스 모음), watch(개별 리소스 또는 리소스 모음을 주시)</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>update</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td>patch</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>delete(개별 리소스), deletecollection(리소스 모음)</td>
+</tr>
+</tbody>
+</table>
+<p>행위에 대한 대상이 리소스라면 행위를 verb 로 적어주고, URL 이라면 HTTP 메소드로 적어준다.</p>
+<p>이름 그대로 Role 은 역할이고, RoleBinding 은 이러한 역할을, 역할을 수행하는 주체에 연결시켜 주는 것이다.</p>
+<h3 id="Role-과-RoleBinding-의-특징">Role 과 RoleBinding 의 특징</h3>
+<p>Role 과 RoleBinding 은 특정 네임스페이스에 종속된 개념이다. 그렇기 때문에 RoleBinding 은 다른 네임스페이스의 Role 을 바인딩해줄 수는 없다.</p>
+<p>하지만, RoleBinding 이 같은 네임스페이스의 Role 을 <strong>다른 네임스페이스의 subject</strong> 에게 바인딩해 줄 수는 있다.</p>
+<p>그래서 RoleBinding 에 subject 들을 명시할 때는 name 과 namespace, 그리고 kind(user/group/serviceaccount) 를 함께 명시한다.</p>
+<p>하나의 Role 은 여러개의 RoleBinding 에 의해 바인드될 수 있고, 하나의 RoleBinding 은 하나의 Role 만 참조할 수 있다.</p>
+<p>즉, <strong>Role 과 RoleBinding 은 일대다(one-to-many) 관계</strong>다.</p>
+<p>반면 하나의 RoleBinding 은 하나의 Role 을 여러 주체에 연결시켜 줄 수 있고, 하나의 주체는 여러개의 RoleBinding 에 의해 권한이 부여될 수 있다.</p>
+<p>즉, <strong>RoleBinding 과 Subject(ServiceAccount 등) 는 다대다(many-to-many) 관계</strong>다.</p>
+<h3 id="Role-과-RoleBinding-만들기">Role 과 RoleBinding 만들기</h3>
+<p>Role 과 RoleBinidng 을 만드는 방법은 크게 두가지가 있다.</p>
+<p>하나는 매니페스트를 통해 만드는 방법이고, 나머지 하나는 <code>kubectl create</code> 명령어를 통해 만드는 방법이다.</p>
+<p>다음과 같이 YAML 파일을 작성하지 않고도 직접 verb, resource, role, serviceaccount 등을 인자로 주어 Role 과 RoleBinding 을 생성할 수 있다.</p>
+<p><img src="/images/api-server-security-in-k8s/create-role.png" alt="롤 만들기"></p>
+<p><img src="/images/api-server-security-in-k8s/create-role-binding.png" alt="롤바인딩 만들기"></p>
+<p>RoleBinding 의 속성 중 Role 은 단수형이고, Subjects 는 복수형이라는 것을 봐도 이들간의 연관관계를 짐작할 수 있다.</p>
+<p>다음과 같이 YAML 파일을 통해 Role 과 RoleBinding 을 생성할 수도 있다.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Role</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">foo</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">service-reader</span></span><br><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">apiGroups:</span> <span class="string">[""]</span></span><br><span class="line">    <span class="attr">verbs:</span> <span class="string">["get",</span> <span class="string">"list"</span><span class="string">]</span></span><br><span class="line">    <span class="attr">resources:</span> <span class="string">["services"]</span></span><br></pre></td></tr></table></figure>
+<h2 id="ClusterRole-과-ClusterRoleBinding">ClusterRole 과 ClusterRoleBinding</h2>
+<p>ClusterRole 과 ClusterRoleBinding 이 필요한 이유는, Role 과 RoleBinding 이 특정 네임스페이스에 종속된 개념이기 때문이다.</p>
+<p>그렇기 때문에 크게 다음과 같은 3가지 한계가 존재한다.</p>
+<h3 id="Role-과-RoleBinding-의-한계">Role 과 RoleBinding 의 한계</h3>
+<p>첫번째로, 모든 네임스페이스에 대해 똑같은 권한을 부여하고 싶은 경우에 각 네임스페이스마다 매번 똑같은 내용의 Role 을 만들어줘야 할 것이다.</p>
+<p>하지만 이런 방식은 번거롭고 실수하기도 쉽다.</p>
+<p>두번째로, Role 은 같은 네임스페이스에 존재하는 리소스에 대한 권한만 허용할 수 있다.</p>
+<p>그렇기 때문에 하나의 서비스어카운트에 모든 네임스페이스에 존재하는 특정 리소스에 대한 권한을 주고 싶은 경우에</p>
+<p>모든 네임스이스마다 Role 과 RoleBinding 을 만들고 이 서비스어카운트에 바인딩해줘야 한다.</p>
+<p>세번째로, 네임스페이스에 독립적인 클러스터 수준의 리소스나 리소스와 관련이 없는 요청도 있다.</p>
+<p>예를 들어, Node 나 Namespace 와 같은 리소스은 물론이고, ClusterRole 과 ClusterRoleBinding 또한 특정 네임스페이스에 속한 리소스가 아니며,</p>
+<p>앞서 언급한 <code>/healthz</code> 와 같은 URL 은 리소스와는 관련이 없는 요청이다.</p>
+<p>위와 같은 3가지 경우 ClusterRole 과 ClusterRoleBinding 을 사용해야 한다.</p>
+<p>첫번째의 경우는, RoleBinding 은 Role 뿐 아니라 ClusterRole 도 참조할 수 있기 때문에</p>
+<p>ClusterRole 만 하나 만들어 두고, 각 네임스페이스에 있는 RoleBinding 이 이를 참조하여 subject 에 바인딩해주도록 하면</p>
+<p>네임스페이스마다 Role 을 정의하는 대신 ClusterRole 이라는 글로벌한 Role 을 정의할 수 있게 된다.</p>
+<p>두번째의 경우는, ClusterRole 에 위와 같이 RoleBinding 을 사용하는 것이 아니라, ClusterRoleBinding 을 사용하면 해결할 수 있다.</p>
+<p>ClusterRole 을 사용하더라도 RoleBinding 을 사용하면 RoleBinding 과 같은 네임스페이스에 속한 리소스에대한 권한만 얻을 수 있다.</p>
+<p>반면, ClusterRoleBinding 을 사용하여 subject 에 ClusterRole 을 바인딩을 해주면 모든 네임스페이스에 속한 리소스에 대한 권한을 얻을 수 있다.</p>
+<p>세번째의 경우도 두번째의 경우와 마찬가지로 ClusterRole 과 ClusterRoleBinding 을 사용하면 해결할 수 있다.</p>
+<p>ClusterRole 에는 Role 과는 달리 Resources 는 물론 Non-Resource URLs 을 정의할 수가 있다.</p>
+<p>다음은 kubectl 을 통해 ClusterRole 을 만들고 이를 조회한 결과 화면이다.</p>
+<p><img src="/images/api-server-security-in-k8s/create-cluster-role.png" alt="클러스터롤 만들기"></p>
+<h3 id="디폴트-ClusterRole-ClusterRoleBinding">디폴트 ClusterRole &amp; ClusterRoleBinding</h3>
+<p>API 서버는 기본적으로 디폴트 ClusterRole 과 ClusterRoleBinding 을 생성한다.</p>
+<p>보통 디폴트로 생성된 클러스터롤과 클러스터롤바인딩은 <code>system:</code> 접두사를 가진다.</p>
+<p>대부분의 디폴트 ClusterRole 들은 같은 이름을 가진 ClusterRoleBinding 이 존재한다.</p>
+<p><img src="/images/api-server-security-in-k8s/default-cluster-role.png" alt="디폴트 클러스터롤 조회하기"><br>
+<img src="/images/api-server-security-in-k8s/default-cluster-role-binding.png" alt="디폴트 클러스터롤바인딩 조회하기"></p>
+<p>그 중에서도 <strong>system:discovery</strong> 와 <strong>system:public-info-viewer</strong> 의 경우</p>
+<p>공개되어도 안전하다고 여겨지는 정보들에 대한 읽기 권한을 <strong>system:authenticated</strong> 이나 <strong>system:unauthenticated</strong> group 에 바인딩하며,</p>
+<p><code>system:controller:</code> 접두사를 가지는 것들은 쿠버네티스의 여러 컨트롤러들에게 권한을 부여하는데 사용된다.</p>
+<p>다음과같이 <code>system:</code> 접두사를 가지지 않은 디폴트 클러스터롤(&amp; 클러스터롤바인딩)도 존재한다.</p>
+<table>
+<thead>
+<tr>
+<th>cluster-admin</th>
+<th>모든 리소스에 대한 모든 권한</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>admin</td>
+<td>ResourceQuota 와 Namespace 를 제외한 모든 리소스에 대한 조회 및 수정 가능</td>
+</tr>
+<tr>
+<td>edit</td>
+<td>admin 의 권한에서 (Cluster)Role 과 (Cluster)RoleBinding 은 조회만 가능</td>
+</tr>
+<tr>
+<td>view</td>
+<td>(Cluster)Role, (Cluster)RoleBinding, Secret 을 제외한 모든 리소스 조회만 가능</td>
+</tr>
+</tbody>
+</table>
+<p>이 중 <strong>system:masters</strong> group 에 바인딩 되어있는 cluster-admin 을 제외하고</p>
+<p>나머지 ClusterRole 들은 기본적으로 ClusterRoleBinding 에 의해 어딘가에 바인딩 되어 있진 않다.</p>
+<h2 id="참조">참조</h2>
+<ul>
+<li>쿠버네티스 인 액션(2020, 에이콘출판사)</li>
+<li>서비스 어카운트 관리하기(<a href="https://kubernetes.io/ko/docs/reference/access-authn-authz/service-accounts-admin/">https://kubernetes.io/ko/docs/reference/access-authn-authz/service-accounts-admin/</a>)</li>
+<li>Authentication(<a href="https://kubernetes.io/docs/reference/access-authn-authz/authentication/">https://kubernetes.io/docs/reference/access-authn-authz/authentication/</a>)</li>
+<li>인가 개요(<a href="https://kubernetes.io/ko/docs/reference/access-authn-authz/authorization/">https://kubernetes.io/ko/docs/reference/access-authn-authz/authorization/</a>)</li>
+<li>Using RBAC Authorization(<a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/">https://kubernetes.io/docs/reference/access-authn-authz/rbac/</a>)</li>
+</ul>
+</div><div class="article-tags size-small mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Cloud/">Cloud</a><a class="link-muted mr-2" rel="tag" href="/tags/Kubernetes/">Kubernetes</a><a class="link-muted mr-2" rel="tag" href="/tags/DevOps/">DevOps</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=5ea69e998fb91e001b32120c&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2021/01/26/kubernetes-in-action-review/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">[책 리뷰] Kubernetes in Action</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2021/01/17/k8s-downward-api/"><span class="level-item">Kubernetes 의 Downward API</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://sgc109.github.io/2021/01/23/api-server-security-in-k8s/';
+            this.page.identifier = 'api-server-security-in-k8s';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'https-sgc109-github-io' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="is-flex" href="#쿠버네티스에서-API-서버-보안은-왜-필요할까"><span class="mr-2">1</span><span>쿠버네티스에서 API 서버 보안은 왜 필요할까?</span></a></li><li><a class="is-flex" href="#Service-Account"><span class="mr-2">2</span><span>Service Account</span></a><ul class="menu-list"><li><a class="is-flex" href="#Service-Account-란"><span class="mr-2">2.1</span><span>Service Account 란?</span></a></li><li><a class="is-flex" href="#ServiceAccount-의-특징"><span class="mr-2">2.2</span><span>ServiceAccount 의 특징</span></a></li><li><a class="is-flex" href="#ServiceAccount-의-동작-방식"><span class="mr-2">2.3</span><span>ServiceAccount 의 동작 방식</span></a></li></ul></li><li><a class="is-flex" href="#RBAC-란"><span class="mr-2">3</span><span>RBAC 란?</span></a></li><li><a class="is-flex" href="#Role-과-RoleBinding"><span class="mr-2">4</span><span>Role 과 RoleBinding</span></a><ul class="menu-list"><li><a class="is-flex" href="#Role-과-RoleBinding-의-특징"><span class="mr-2">4.1</span><span>Role 과 RoleBinding 의 특징</span></a></li><li><a class="is-flex" href="#Role-과-RoleBinding-만들기"><span class="mr-2">4.2</span><span>Role 과 RoleBinding 만들기</span></a></li></ul></li><li><a class="is-flex" href="#ClusterRole-과-ClusterRoleBinding"><span class="mr-2">5</span><span>ClusterRole 과 ClusterRoleBinding</span></a><ul class="menu-list"><li><a class="is-flex" href="#Role-과-RoleBinding-의-한계"><span class="mr-2">5.1</span><span>Role 과 RoleBinding 의 한계</span></a></li><li><a class="is-flex" href="#디폴트-ClusterRole-ClusterRoleBinding"><span class="mr-2">5.2</span><span>디폴트 ClusterRole &amp; ClusterRoleBinding</span></a></li></ul></li><li><a class="is-flex" href="#참조"><span class="mr-2">6</span><span>참조</span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/sungho.png" alt="Sungho&#039;s Blog" height="28"></a><p class="size-small"><span>&copy; 2022 Sungho Hwang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://sgc109.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to Top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

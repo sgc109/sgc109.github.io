@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>파이썬과 동시성 프로그래밍 - Sungho&#039;s Blog</title><meta description="파이썬의 동시성 프로그래밍과 관련하여 삽질한 내용을 바탕으로 블로그 포스팅을 작성해보았다."><meta property="og:type" content="blog"><meta property="og:title" content="파이썬과 동시성 프로그래밍"><meta property="og:url" content="http://sgc109.github.io/2020/11/25/python-and-concurrency/"><meta property="og:site_name" content="Sungho&#039;s Blog"><meta property="og:description" content="파이썬의 동시성 프로그래밍과 관련하여 삽질한 내용을 바탕으로 블로그 포스팅을 작성해보았다."><meta property="og:locale" content="en_US"><meta property="og:image" content="http://sgc109.github.io/images/python-and-concurrency/thumbnail.jpg"><meta property="article:published_time" content="2020-11-25T13:40:32.000Z"><meta property="article:modified_time" content="2022-07-23T13:35:53.455Z"><meta property="article:author" content="Sungho Hwang"><meta property="article:tag" content="Languages"><meta property="article:tag" content="Python"><meta property="article:tag" content="Coroutine"><meta property="article:tag" content="Concurrency"><meta property="article:tag" content="Asynchronous"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/images/python-and-concurrency/thumbnail.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://sgc109.github.io/2020/11/25/python-and-concurrency/"},"headline":"Sungho's Blog","image":["http://sgc109.github.io/images/python-and-concurrency/thumbnail.jpg"],"datePublished":"2020-11-25T13:40:32.000Z","dateModified":"2022-07-23T13:35:53.455Z","author":{"@type":"Person","name":"Sungho Hwang"},"description":"파이썬의 동시성 프로그래밍과 관련하여 삽질한 내용을 바탕으로 블로그 포스팅을 작성해보았다."}</script><link rel="canonical" href="http://sgc109.github.io/2020/11/25/python-and-concurrency/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" type="text/css"><link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet" type="text/css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-172530521-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-172530521-1');</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><link rel="alternate" href="/rss2.xml" title="Sungho's Blog" type="application/rss+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/sungho.png" alt="Sungho&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/sgc109"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="thumbnail" src="/images/python-and-concurrency/thumbnail.jpg" alt="파이썬과 동시성 프로그래밍"></span></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-11-25T13:40:32.000Z" title="2020-11-25T13:40:32.000Z">2020-11-25</time><span class="level-item"><a class="link-muted" href="/categories/Languages/">Languages</a><span> / </span><a class="link-muted" href="/categories/Languages/Python/">Python</a></span></div></div><h1 class="title is-3 is-size-4-mobile">파이썬과 동시성 프로그래밍</h1><div class="content"><p>파이썬의 동시성 프로그래밍과 관련하여 삽질한 내용을 바탕으로 블로그 포스팅을 작성해보았다.</p>
+<a id="more"></a>
+<p>지금까지는 파이썬으로 비교적 단순한 코드만 작성해 보았고, 팀에서 주로 사용하는 언어가 스칼라이기 때문에 파이썬에서의 동시성 프로그래밍에 대해서는 완전히 문외한이었다.</p>
+<p>하지만 어쩌다 파이썬으로 동시성 프로그래밍을 해야할 일이 생겼고, 간단하게나마 내용을 정리해보았다.</p>
+<h2 id="동시성과-병렬성">동시성과 병렬성</h2>
+<p>우선 동시성(Concurrency)과 병렬성(Parallelism)의 차이에 대해 이야기 해보자.<br>
+철수가 소파에 앉아있고, 앞에 3개의 TV 가 서로 적당한 간격을 두고 있다고 가정하자. 철수는 자신이 가장 좋아하는 예능 프로그램인 무한도전, 1박2일, 아는형님을 각각의 TV 에 틀어놓았다.<br>
+3개의 예능 프로그램을 너무나도 좋아한 나머지 동시에 보고싶었기 때문이다. 철수는 우선 무한도전을 틀어놓은 TV를 10초 보다가, 1박2일을 틀어놓은 TV를 3초 보다가, 아는형님을 틀어놓은 TV를 5초간 보았다.<br>
+여기서 알 수 있는 사실은, 철수는 3개의 예능 프로를 동시에(Concurrent) 시청하고 있지만 한 번에 하나의 TV 만 볼 수 있다. 즉, 눈이 3쌍이 아니기 때문에 3개의 TV 를 한 번에(Parallel)볼 수는 없는 것이다.<br>
+물론 한국어와 영어 단어 사이에 1대1 대응이 어려워 두 행위 모두 '동시에'라고 얘기할 수 있기 때문에 헷갈릴 수도 있다. 하지만 철수가 한 번에 하나의 TV 만 볼 수 있기 때문에 병렬성은 없는 것이며, 동시에 여러개의 예능 프로를 본다는 것은 동시성은 있는 것이다.<br>
+컴퓨터의 세계에서는 철수를 컴퓨터로, 철수의 눈 한 쌍이 CPU 의 코어 하나라고 볼 수 있고, 각 예능 프로그램이 스레드라고 볼 수 있다. 여러개의 스레드가 실행중이지만 싱글 코어 CPU 이기 때문에 한 번에 하나의 작업만 수행할 수 있는 것이다. 물론 여러 스레드를 아주 빠른 속도로 번갈아 수행하면 마치 병렬적으로 수행되는것처럼 보일 수도 있다. 반면 멀티 코어 CPU 에서 여러개의 스레드가 동시에 여러개의 코어에서 실행될 수 있다. 어떤 특정 시점에 두 개 이상의 스레드가 코어에서 실행 중이라면 그것은 병렬성이 있다고 하는것이다.</p>
+<h2 id="파이썬에서의-동시성-프로그래밍">파이썬에서의 동시성 프로그래밍</h2>
+<h3 id="멀티프로세싱과-멀티스레딩">멀티프로세싱과 멀티스레딩</h3>
+<p>파이썬에서 동시성 프로그래밍을 하는 방법은 정말 많다. 우선 가장 쉽게 떠올릴 수 있는 방법은 멀티프로세싱과 멀티스레딩이다.</p>
+<p>파이썬에는 <code>GIL(Global Interpreter Lock)</code>이라는 것이 있어서, 하나의 process 내의 여러개의 thread 가 병렬적으로 실행될 수 없다. 즉, 멀티 코어 CPU 에서 동작한다고 하더라도 하나의 프로세스는 동시에 여러개의 코어를 사용할 수 없다는 뜻이다. 그렇기 때문에 만약 수행하고자 하는 작업이 CPU bound job 이고 multi-core CPU 환경인 경우에는 멀티프로세싱을 사용하는 것이 유리하다. 왜냐하면 하나의 프로세스 내에서 아무리 여러개의 스레드를 만들어봐야, 하나의 스레드에서 순차적으로 수행하는것과 비교하여 딱히 성능이 좋아지지 않기 때문이다. context switching 을 생각하면 멀티스레딩 쪽이 오히려 더 느릴 수도 있다. 게다가 여러개의 스레드를 사용하면 메모리 사용량도 많아진다.</p>
+<p>하지만 만약 수행하고자 하는 작업이 I/O bound job 이라면 이야기가 달라진다. 어떤 스레드가 I/O 를 수행하기 위해 block 이 되면 GIL 을 반환하게 되고, 그 동안 다른 스레드가 실행될 수 있기 때문이다. 물론 복수의 스레드가 복수의 코어에서 병렬적으로 실행될 수 없다는 사실은 변함이 없지만, 하나의 스레드만 사용하여 여러 작업을 동시에 수행하고자 하는 경우에는 이 스레드가 block 이 되면 아무런 일도 하지 않게 되기 때문에 이런 경우에는 멀티스레딩을 사용할 가치가 충분히 있는것이다. 하지만 스레드는 직접 사용하기가 까다롭다. race condition 도 발생할 수 있고, 메모리 사용량과 context switching 측면에서도 비용이 비싸다.</p>
+<p>다음은 David Beazley 의 발표 영상에서 발췌한 파이썬에서 동시성 프로그래밍의 발전 과정을 단순화한 그림이다.<br>
+<img src="/images/python-and-concurrency/history.png" alt="A history of concurrent programming in python"><br>
+영상을 보면 파란 화살표가 둥그렇게 돌아서 다시 스레드와 가까운 쪽으로 오도록 그린 의도가, 스레드를 직접 사용하는 것의 단점에서 출발하여 결국은 스레드와 비슷한 모양새로 발전해왔기 때문이라고 한다.<br>
+asyncio 와 같은 라이브러리들은 마치 스레드를 사용하는 것과 비슷한 느낌이 들지만, 실제로 기본적으로는 여러 스레드를 사용하지 않기 때문에 스레딩의 단점이었던 몇몇 특징을 가지고있지 않다.</p>
+<h3 id="코루틴">코루틴</h3>
+<p>파이썬에서 동시성 프로그래밍을 할 수 있는 또다른 방법은 <code>코루틴(Coroutine)</code>을 사용하는 것이다.<br>
+코루틴은 특정 언어에 종속되는 개념이 아닌 general 한 개념이다. 보통의 프로그램은 함수1에서 함수2를 호출한 경우 함수2를 서브루틴이라고 부른다. 이 때 함수1과 함수2는 종속적인 관계를 갖는다고 볼 수 있다. 함수2에 정의된 일련에 코드가 모두 수행되면 항상 함수1로 실행의 흐름이 돌아가게 된다.<br>
+하지만 코루틴은 서로 종속적인 관계가 아닌 상호 협력적인(<strong>cooperative</strong>) 관계다. 코루틴1은 원하는 시점에 코루틴2, 혹은 코루틴3 에게 실행의 흐름을 넘겨줄 수 있다. 그러면 코루틴1은 실행 흐름을 넘겨준 지점에서 멈춰있는 상태가 되고 나중에 언제든지 해당 지점부터 다시 이어서 실행될 수 있는 상태가 된다. 실행 흐름을 양보(yield)받은 코루틴은 처음 실행되는 거라면 처음부터 실행되고 만약 이전에 코드를 실행하다 멈춰져있던 상태라면 멈춘 지점부터 다시 순차적으로 코드가 실행되기 시작한다. 그리고 마찬가지로 원하는 시점에 다른 코루틴으로 실행 흐름을 넘겨줄 수 있다. 이것은 한편으로는 스레드와 비슷하다. 다른 코루틴에게 실행의 흐름을 넘겨주는 행위는 스레드간의 컨텍스트 스위칭과 비슷하다고 할 수 있다. 다만 스레드간의 컨텍스트 스위칭이 발생하는 시점과 다음에 어떤 스레드가 실행될 것인지 결정하는 것은 kernel 영역에서, 즉 OS에 의해 결정되는 반면, 코루틴간에 흐름이 변경되는 지점은 user 영역에서, 즉 개발자가 코드로 명시하게 된다. 즉, 코루틴간의 제어의 흐름을 개발자가 완벽하게 컨트롤할 수 있다는 뜻이다(물론 여러 코루틴이 실행되는 스레드가 컨텍스트 스위칭에 의해 실행이 멈춰 그 안에서 수행되던 모든 코루틴의 실행도 함께 멈출 수는 있다). 이는 <strong>preemptive</strong> 한 OS 의 native thread 와는 대조된다. 게다가 코루틴은 스레드보다 메모리 사용량도 적으며, 컨텍스트 스위칭으로 인한 비용도 없다.<br>
+파이썬에서는 주로 이 코루틴과 이벤트 루프를 함께 사용하여 편리하게 동시성 프로그래밍을 할 수 있게 하는 패키지들이 많다. 많은 패키지들은 내부적으로 다음과같이 구현되어있다. 코루틴은 큐 안에 들어가고 이벤트 루프는 큐 안에 있는 코루틴을 하나씩 빼 코드를 실행하다가 비동기 작업이 시작되면 해당 라인에서 멈추어 다시 큐의 뒷부분에 넣는다. 만약 큐에서 코루틴을 꺼냈는데 비동기 작업이 종료된 상태라면 결과값을 사용하여 멈췄던 부분부터 다시 코드를 실행한다. 이렇기 때문에 하나의 스레드로도 여러 비동기 작업들을 동시에 수행할 수 있는 것이다. 또한 우리가 원하는 시점에 context switching 없이 다음 코루틴에게 실행권을 양도할 수 있게된다.</p>
+<h2 id="파이썬에서-코루틴-사용하기">파이썬에서 코루틴 사용하기</h2>
+<h3 id="generator">generator</h3>
+<p>파이썬에서 코루틴을 사용하는 방법은 여러가지가 있다. 우선 <code>generator</code> 를 코루틴으로 사용할 수 있다. generator 의 동작 방식을 보면 코루틴의 동작방식과 유사하다. 제너레이터 내부에서 yield 키워드를 만날 때마다 실행의 흐름이 generator 를 인자로 next() 함수를 호출한 쪽으로 넘어가면서 값을 뱉는다. 그리고 언제든지 next() 메소드를 사용하여 generator 의 이전에 멈춘 지점부터 실행하여 다음 yield 문을 만날 때까지 실행된다. 파이썬 3.4 부터는 subgenerator 에게 위임하기 위한 문법으로 <a href="https://www.python.org/dev/peps/pep-0380/#generators-as-threads">yield from이 추가</a>되었는데 이를 통해 generator 를 활용한 동시성 프로그래밍이 더 편해졌다.</p>
+<h3 id="asyncio">asyncio</h3>
+<p>또 다른 방법은 파이썬 빌트인 라이브러리인 <a href="https://www.python.org/dev/peps/pep-3156/">파이썬 3.4 버전부터 도입</a>된 <code>asyncio</code> 와 <a href="https://www.python.org/dev/peps/pep-0492/">파이썬 3.5 버전부터 도입</a>된 <code>async/await</code> 키워드를 통한 방법이다.<br>
+asyncio 는 자체적으로 coroutine 과 event loop 를 가지고 있어서 이를 통해 동시성 프로그래밍을 지원한다. 동작 원리와 구현 스타일은 전체적으로 generator 방식과 매우 유사하다.<br>
+개인적으로는 현시점에서 굳이 asyncio 를 안 쓸 이유가 있나 싶다. 왜냐하면 asyncio 는 파이썬에서 공식적으로 지원하는 built-in 패키지이기 때문에 수많은 파이썬 서버와 라이브러리가 이 asyncio 를 지원하며, 문서화도 잘 되어있기 때문이다.</p>
+<h3 id="3rd-party-라이브러리">3rd-party 라이브러리</h3>
+<p>또 하나는 써드파티 라이브러리를 통한 방법이다. 파이썬에는 <code>greenlet</code> 과 같은 써드파티 코루틴 라이브러리들이 있다.<br>
+대표적으로 <code>gevent</code> 는 내부적으로 greenlet 를 사용하며, 거기에 libev 라는 이벤트루프와 monkey patch 라는 기술 등등을 사용하여 동시성을 구현한다.<br>
+greenlet 을 <code>green thread</code> 라고도 부른다. green thread 또한 general 한 개념인데, 위에서 설명한 코루틴의 특징과 비슷하게, OS가 아닌 user 영역에서 생성되고 관리되며, cooperative 한 lightweight 스레드라고 보면 된다.<br>
+asyncio 가 등장하고 어느정도 정착되기 전까지는 gevent 와 같은 써드파티 라이브러리들이 많이 사용되었고, 아직도 많이 사용되는것 같다.</p>
+<h2 id="파이썬-서버-및-프레임워크와-동시성">파이썬 서버 및 프레임워크와 동시성</h2>
+<p>보통 파이썬으로 프로덕션 수준의 서버를 개발한다면 Flask 의 Werkzeug 과 같이 프레임워크에 내장된 WSGI 서버를 사용하기 보다는 uWSGI 나 Gunicorn 와 같은 별도의 서버를 사용하는 경우가 많다. gunicorn 의 경우는 worker-class 옵션을 통해 각 worker process 가 어떤 방식으로 요청을 처리하게 할 지 설정할 수가 있는데, 기본적으로는 하나의 worker process 가 최대 하나의 요청만 동기적으로 처리하게 된다. worker-class 옵션을 <em>gthread</em> 로 설정하여 멀티스레드 기반으로 동작하도록 할 수도 있고, <em>gevent</em> 와 같은 비동기 worker 를 사용하여 처리하도록 할 수도 있다. 주의할 점이 있다면 gunicorn 에서 gevent worker 를 사용하고 스크립트 코드상에서는 asyncio 를 사용한다면 각자 코루틴과 이벤트 루프의 구현체가 다르기 때문에 둘의 호환을 위한 중간 라이브러리를 추가로 사용하거나 두 곳에서 같은 라이브러리를 사용하도록 통일해야 한다.<br>
+애초부터 비동기 프레임워크를 사용할 수도 있다. 특히 Sanic 이나 Quart 같은 프레임워크는 플라스크와 사용 방법이 매우 비슷하여 처음 사용하는데도 큰 무리가 없다. 이들은 비동기 서버를 내장하여 뷰 함수를 작성할 때 <code>async def</code> 와 같이 정의한다.<br>
+비동기 서버로 Uvicorn 이나 Hypercon 과 같은 ASGI 서버를 사용할 수도 있다. Hypercon 은 본래 Quart 내장 서버에서 분리된 프로젝트여서 Quart 는 기본적으로 Hypercon 을 사용한다.<br>
+아무튼 위와 같은 비동기 서버 및 비동기 worker 들은 멀티스레드를 사용하지 않고도 여러개의 요청을 비동기적으로 처리할 수 있게 한다.</p>
+<h2 id="참고-자료">참고 자료</h2>
+<p>GIL 유튜브 영상(<a href="https://www.youtube.com/watch?v=Obt-vMVdM8s">https://www.youtube.com/watch?v=Obt-vMVdM8s</a>)<br>
+python coroutine 원리 유튜브 영상(<a href="https://www.youtube.com/watch?v=MCs5OvhV9S4">https://www.youtube.com/watch?v=MCs5OvhV9S4</a>)<br>
+python concurrency 유튜브 영상(<a href="https://www.youtube.com/watch?v=lYe8W04ERnY">https://www.youtube.com/watch?v=lYe8W04ERnY</a>)<br>
+gevent 유튜브 영상(<a href="https://www.youtube.com/watch?v=GunMToxbE0E">https://www.youtube.com/watch?v=GunMToxbE0E</a>)</p>
+</div><div class="article-tags size-small mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Languages/">Languages</a><a class="link-muted mr-2" rel="tag" href="/tags/Python/">Python</a><a class="link-muted mr-2" rel="tag" href="/tags/Coroutine/">Coroutine</a><a class="link-muted mr-2" rel="tag" href="/tags/Concurrency/">Concurrency</a><a class="link-muted mr-2" rel="tag" href="/tags/Asynchronous/">Asynchronous</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=5ea69e998fb91e001b32120c&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/11/30/boyer-moore-majority-vote-algorithm/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">Boyer-Moore 과반수 투표 알고리즘</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/08/15/python-wsgi/"><span class="level-item">WSGI 란?</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://sgc109.github.io/2020/11/25/python-and-concurrency/';
+            this.page.identifier = 'python-and-concurrency';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'https-sgc109-github-io' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="is-flex" href="#동시성과-병렬성"><span class="mr-2">1</span><span>동시성과 병렬성</span></a></li><li><a class="is-flex" href="#파이썬에서의-동시성-프로그래밍"><span class="mr-2">2</span><span>파이썬에서의 동시성 프로그래밍</span></a><ul class="menu-list"><li><a class="is-flex" href="#멀티프로세싱과-멀티스레딩"><span class="mr-2">2.1</span><span>멀티프로세싱과 멀티스레딩</span></a></li><li><a class="is-flex" href="#코루틴"><span class="mr-2">2.2</span><span>코루틴</span></a></li></ul></li><li><a class="is-flex" href="#파이썬에서-코루틴-사용하기"><span class="mr-2">3</span><span>파이썬에서 코루틴 사용하기</span></a><ul class="menu-list"><li><a class="is-flex" href="#generator"><span class="mr-2">3.1</span><span>generator</span></a></li><li><a class="is-flex" href="#asyncio"><span class="mr-2">3.2</span><span>asyncio</span></a></li><li><a class="is-flex" href="#3rd-party-라이브러리"><span class="mr-2">3.3</span><span>3rd-party 라이브러리</span></a></li></ul></li><li><a class="is-flex" href="#파이썬-서버-및-프레임워크와-동시성"><span class="mr-2">4</span><span>파이썬 서버 및 프레임워크와 동시성</span></a></li><li><a class="is-flex" href="#참고-자료"><span class="mr-2">5</span><span>참고 자료</span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/sungho.png" alt="Sungho&#039;s Blog" height="28"></a><p class="size-small"><span>&copy; 2022 Sungho Hwang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://sgc109.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to Top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>

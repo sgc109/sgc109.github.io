@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="generator" content="Hexo 4.2.1"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Compound 패턴 (feat. MVC 패턴) - Sungho&#039;s Blog</title><meta description="Compound 를 사전에서 찾아보면 복합체, 혼합물 등의 뜻이 나온다. 그렇다면 Compound 패턴은 무엇일까?"><meta property="og:type" content="blog"><meta property="og:title" content="Compound 패턴 (feat. MVC 패턴)"><meta property="og:url" content="http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/"><meta property="og:site_name" content="Sungho&#039;s Blog"><meta property="og:description" content="Compound 를 사전에서 찾아보면 복합체, 혼합물 등의 뜻이 나온다. 그렇다면 Compound 패턴은 무엇일까?"><meta property="og:locale" content="en_US"><meta property="og:image" content="http://sgc109.github.io/images/compound-pattern-feat-mvc/thumbnail.jpg"><meta property="article:published_time" content="2020-07-18T08:08:23.000Z"><meta property="article:modified_time" content="2022-07-23T13:35:53.453Z"><meta property="article:author" content="Sungho Hwang"><meta property="article:tag" content="Design Pattern"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/images/compound-pattern-feat-mvc/thumbnail.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/"},"headline":"Sungho's Blog","image":["http://sgc109.github.io/images/compound-pattern-feat-mvc/thumbnail.jpg"],"datePublished":"2020-07-18T08:08:23.000Z","dateModified":"2022-07-23T13:35:53.453Z","author":{"@type":"Person","name":"Sungho Hwang"},"description":"Compound 를 사전에서 찾아보면 복합체, 혼합물 등의 뜻이 나온다. 그렇다면 Compound 패턴은 무엇일까?"}</script><link rel="canonical" href="http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono" type="text/css"><link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet" type="text/css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-172530521-1" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-172530521-1');</script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><link rel="alternate" href="/rss2.xml" title="Sungho's Blog" type="application/rss+xml">
+</head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/sungho.png" alt="Sungho&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/sgc109"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="thumbnail" src="/images/compound-pattern-feat-mvc/thumbnail.jpg" alt="Compound 패턴 (feat. MVC 패턴)"></span></div><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><time class="level-item" dateTime="2020-07-18T08:08:23.000Z" title="2020-07-18T08:08:23.000Z">2020-07-18</time><span class="level-item"><a class="link-muted" href="/categories/General/">General</a><span> / </span><a class="link-muted" href="/categories/General/Design-Pattern/">Design Pattern</a></span></div></div><h1 class="title is-3 is-size-4-mobile">Compound 패턴 (feat. MVC 패턴)</h1><div class="content"><p><code>Compound</code> 를 사전에서 찾아보면 <code>복합체, 혼합물</code> 등의 뜻이 나온다.</p>
+<p>그렇다면 <strong>Compound 패턴</strong>은 무엇일까?</p>
+<a id="more"></a>
+<h2 id="Compound-패턴이란">Compound 패턴이란?</h2>
+<p><strong>컴파운드(Compound) 패턴</strong>은 이름 그대로 여러 디자인 패턴이 혼합된 디자인 패턴을 말한다.</p>
+<p>하지만 단순히 여러 패턴이 사용되었다고 해서 컴파운드 패턴인 것은 아니다.</p>
+<p>여러 패턴이 사용되는 동시에 일반적인 문제를 해결하는데 반복적으로 사용될 수 있어야 한다.</p>
+<p>Compound Pattern 의 대표적인 예가 바로 그 유명한 <em><strong>MVC Pattern</strong></em> 이다.</p>
+<h2 id="MVC-패턴이란">MVC 패턴이란?</h2>
+<p><img src="/images/compound-pattern-feat-mvc/mvc-diagram.png" alt="MVC 패턴의 상호작용"></p>
+<p><strong>MVC</strong> 는 <em>Model-View-Controller</em> 의 약자로서, 역할에 따라 3개의 컴포넌트로 분리하고</p>
+<p>여러 디자인 패턴을 적용하여 재사용성을 높인 대표적인 컴파운드 패턴의 예다.</p>
+<p>그렇다면 MVC 패턴에서 사용된다는 여러 디자인 패턴은 대체 무엇일까?</p>
+<p>전통적인 MVC 패턴에서는 다음 3가지 패턴이 사용된다.</p>
+<ul>
+<li><strong>옵저버(Observer) 패턴</strong><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>
+<ul>
+<li>Model 의 상태가 변경 되었을 때 Controller, 혹은 View 에게 이 사실을 알리는데 사용된다.</li>
+</ul>
+</li>
+<li><strong>컴포지트(Composite) 패턴</strong><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>
+<ul>
+<li>View 를 구성하는 컴포넌트들은 계층 구조를 이룬다. (e.g. Java Swing 의 JFrame/JLabel 등, Android 의 View/ViewGroup, HTML 의 DOM)</li>
+</ul>
+</li>
+<li><strong>스트래티지(Strategy) 패턴</strong><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>
+<ul>
+<li>Controller 의 핵심 기능을 인터페이스로 분리하여 View 가 이 인터페이스를 통해 Controller 를 구성(Composition) 한다. 그렇기 때문에 View 는 Controller 를 갈아 끼우며 기능을 변경할 수 있다.</li>
+</ul>
+</li>
+</ul>
+<p>또한, 필요에 따라 <strong>어댑터(Adapter) 패턴</strong><sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> 을 함께 사용할 수도 있다.</p>
+<p>MVC 패턴은 사용되는 곳에 따라(모바일, 웹 등) 여러 프레임워크에서 다양한 형태로 변형되어 적용되곤 한다.</p>
+<p>하지만 이번 섹션에서는 변형되지 않은 전통적인 MVC 패턴에 대해 알아보고, 이어지는 섹션에서 웹 버전의 MVC 인 JSP Model 2 에 대해 알아본다.</p>
+<p>그렇다면 전통적인 MVC 의 3가지 컴포넌트에 대해 알아보자.</p>
+<h3 id="모델-Model">모델(Model)</h3>
+<p><strong>Model</strong> 은 <strong>애플리케이션의 핵심 로직과 데이터를 가지고 있는 컴포넌트</strong>다.</p>
+<p>Controller 가 Model 에게 상태 변경을 요청하면 Model 은 일련의 과정을 거쳐 자신의 상태를 변경하게 되고</p>
+<p>상태 변경이 완료되면 이를 Controller 와 View 에게 알린다.</p>
+<p>그런데 Model 의 한가지 큰 특징은 Controller 와 View 에 대해 알지 못한다는 것이다.</p>
+<p>이게 가능한 이유는 위에서 언급한 것처럼 Observer 패턴을 사용하기 때문인데</p>
+<p>조금 설명을 하자면, Controller 와 View 는 Observer 라는 인터페이스를 구현하고</p>
+<p>이 타입을 통해 Model 을 subscribe 하므로 Model 입장에서 이들은</p>
+<p>단순히 모두 똑같은 Observer 일 뿐이지 각 Observer 가 실제로 어떤 객체인지는 알 필요가 없다.</p>
+<p>클래스 다이어그램을 그려보면 다음과 같다</p>
+<p><img src="/images/compound-pattern-feat-mvc/mvc-class-diagram.png" alt="MVC 패턴의 클래스 다이어그램"></p>
+<p>이를 통해 Controller 와 View 에 대한 Model 의 결합(Coupling)을 느슨하게 하고, 이들의 재사용성을 높이게 된다.</p>
+<p>참고로, 전혀 다른 비즈니스 로직을 가지는 Model 에 <em>Adapter 패턴</em>을 활용하여 기존의 View 와 Controller 를 그대로 재사용할 수도 있다.</p>
+<h3 id="뷰-View">뷰(View)</h3>
+<p><strong>View</strong> 는 <strong>사용자와의 상호작용을 담당</strong>하며, 크게 2가지 역할을 수행한다.</p>
+<p><strong>첫째</strong>는 <strong>사용자에게 화면을 보여주는 것</strong>이다. GUI 환경이라면 버튼이나 체크박스 등이 될 수 있고, CLI 환경이라면 텍스트가 될 것이다.</p>
+<p>Model 로 부터 자신의 상태가 변경 되었다는 알림을 받을 때마다 Model 에게 데이터를 받아, 이를 기반으로 화면을 업데이트한다.</p>
+<p>Model 의 데이터를 기반으로 변경하는 것 뿐만 아니라, 단순히 Controller 요청에 따라 화면을 변경하기도 한다.</p>
+<p><strong>둘째</strong>는 <strong>사용자의 입력 이벤트를 받는 것</strong>이다. 정확히는 사용자의 이벤트를 받아 Controller 에게 전달한다.</p>
+<h3 id="컨트롤러-Controller">컨트롤러(Controller)</h3>
+<p><strong>Controller</strong> 는 <strong>View 와 Model 사이의 중재자</strong>이다.</p>
+<p>Controller 는 View 로 부터 사용자의 입력 이벤트를 받으면 다시 View 에게 화면 업데이트를 요청할 수도 있고</p>
+<p>Model 에게 상태 변경을 요청할 수도 있다. 위에서 말한 것처럼 Model 은 상태 변경이 완료되면 Observer 패턴을 통해 Controller 와 View 에게 이를 알린다.</p>
+<h2 id="JSP-Model-2-란">JSP Model 2 란?</h2>
+<p><img src="/images/compound-pattern-feat-mvc/model2.png" alt="JSP Model 2 의 구조 (출처: https://en.wikipedia.org/wiki/JSP_model_2_architecture)"></p>
+<p><strong>JSP Model 2</strong><sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup> 란 MVC 패턴을 웹 애플리케이션에 맞는 형태로 적용시킨 것이다.</p>
+<p>즉, Spring 과 같은 Web Framework 에서 사용하는 MVC 패턴은 JSP 를 사용하지 않는다고 하더라도</p>
+<p>사실상 전통적인 MVC 패턴 보다는 이 JSP Model 2 에 해당한다고 할 수 있다.</p>
+<p>(좀 더 구체적으로 말하자면, Spring MVC 에서 사용하는 패턴은 Servlet(<code>DispatcherServlet</code>)에서 HTTP 요청을 처리하는 것을 제외한 Controller 로직을 분리한 구조로, <strong>Front Controller 패턴</strong><sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> 이라고 부른다.)</p>
+<p>사실 <strong>JSP Model 1</strong><sup class="footnote-ref"><a href="#fn7" id="fnref7">[7]</a></sup> 도 있는데 Model 1 에서는 View 와 Controller 의 역할이 분리되지 않고 하나의 컴포넌트에서 담당하는 모양을 하고있다.</p>
+<p>Model 2 의 등장으로 웹 애플리케이션 개발 단위는 View 에 해당하는 JSP pages 와 Controller 에 해당하는 Servlet 이 완벽하게 분리되었기 때문에 HTML 과 약간의 JSP 에 대한 지식을 가진 웹 퍼블리셔와 전문적인 소프트웨어 지식을 가진 개발자의 역할을 분리하여 생산성을 높이는데 기여했다.</p>
+<p>그럼 Model 2 에서는 MVC 의 각각의 컴포넌트가 전통적인 MVC 와 어떻게 다른지 알아보자</p>
+<h3 id="Java-Bean-Model">Java Bean (Model)</h3>
+<p>Model 2 에서의 Model 이 전통적인 MVC 에서의 Model 과 가장 큰 차이점은</p>
+<p>Model 2 에서는 View 로 부터 사용자의 입력 이벤트가 들어올 때, 네트워크(HTTP)를 통해 들어온다는 것이다.</p>
+<p>그렇기 때문에 Model 의 상태 변경이 완료되었을 때 View 에게 이를 알리지 않는다.</p>
+<p>단지 Controller 의 요청이 있을 때만 Model 이 <strong>Java Bean</strong> 으로서 Controller 를 통해 View 에게 전달될 뿐이다.</p>
+<h3 id="JSP-View">JSP (View)</h3>
+<p>Controller 를 통해 Model 로 부터 전달받은 Java Bean 내 데이터를 기반으로 화면을 구성한다.</p>
+<h3 id="Servlet-Controller">Servlet (Controller)</h3>
+<p>HTTP 요청에 따라 Model 에 상태 변경을 요청하고 상태가 변경된 Model 을 View 에 전달한다.</p>
+<p>HTTPServlet 클래스를 상속받아 <code>doGet()</code>, <code>doPost()</code>, <code>doPut()</code>, <code>doDelete()</code> 등의 메소드를 Override 하여</p>
+<p>HTTP 요청을 받으며, 메소드 인자로 전달된 HttpServletRequest 객체를 사용하여 요청과 함께 전달된 데이터를 읽어들인다.</p>
+<!-- Clean Architecture 읽고 내용 추가하기 -->
+<h2 id="참고">참고</h2>
+<p><a href="https://github.com/sgc109/design-pattern-study">https://github.com/sgc109/design-pattern-study</a><br>
+<a href="http://www.kyobobook.co.kr/product/detailViewKor.laf?mallGb=KOR&amp;ejkGb=KOR&amp;linkClass=331401&amp;barcode=9788979143409">Head First Design Patterns</a><br>
+<a href="http://www.kirkdorffer.com/jspspecs/jsp092.html#model">JavaServer Pages Spec</a></p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a href="https://github.com/sgc109/design-pattern-study/tree/master/02-Observer-Pattern">https://github.com/sgc109/design-pattern-study/tree/master/02-Observer-Pattern</a> <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p><a href="https://github.com/sgc109/design-pattern-study/tree/master/09-Iterator-and-Composite-Patterns">https://github.com/sgc109/design-pattern-study/tree/master/09-Iterator-and-Composite-Patterns</a> <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p><a href="https://github.com/sgc109/design-pattern-study/tree/master/01-Strategy-Pattern">https://github.com/sgc109/design-pattern-study/tree/master/01-Strategy-Pattern</a> <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p><a href="https://github.com/sgc109/design-pattern-study/tree/master/07-Adapter-and-Facade-Patterns">https://github.com/sgc109/design-pattern-study/tree/master/07-Adapter-and-Facade-Patterns</a> <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p><a href="https://en.wikipedia.org/wiki/JSP_model_2_architecture">https://en.wikipedia.org/wiki/JSP_model_2_architecture</a> <a href="#fnref5" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p><a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-servlet">https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-servlet</a> <a href="#fnref6" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn7" class="footnote-item"><p><a href="https://en.wikipedia.org/wiki/JSP_model_1_architecture">https://en.wikipedia.org/wiki/JSP_model_1_architecture</a> <a href="#fnref7" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+</div><div class="article-tags size-small mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Design-Pattern/">Design Pattern</a></div><div class="sharethis-inline-share-buttons"></div><script src="https://platform-api.sharethis.com/js/sharethis.js#property=5ea69e998fb91e001b32120c&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2020/07/19/head-first-design-patterns/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">[책 리뷰] Head First Design Patterns</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2020/07/16/git-submodule/"><span class="level-item">Git 의 서브모듈(Submodule)</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://sgc109.github.io/2020/07/18/compound-pattern-feat-mvc/';
+            this.page.identifier = 'compound-pattern-feat-mvc';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'https-sgc109-github-io' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="is-flex" href="#Compound-패턴이란"><span class="mr-2">1</span><span>Compound 패턴이란?</span></a></li><li><a class="is-flex" href="#MVC-패턴이란"><span class="mr-2">2</span><span>MVC 패턴이란?</span></a><ul class="menu-list"><li><a class="is-flex" href="#모델-Model"><span class="mr-2">2.1</span><span>모델(Model)</span></a></li><li><a class="is-flex" href="#뷰-View"><span class="mr-2">2.2</span><span>뷰(View)</span></a></li><li><a class="is-flex" href="#컨트롤러-Controller"><span class="mr-2">2.3</span><span>컨트롤러(Controller)</span></a></li></ul></li><li><a class="is-flex" href="#JSP-Model-2-란"><span class="mr-2">3</span><span>JSP Model 2 란?</span></a><ul class="menu-list"><li><a class="is-flex" href="#Java-Bean-Model"><span class="mr-2">3.1</span><span>Java Bean (Model)</span></a></li><li><a class="is-flex" href="#JSP-View"><span class="mr-2">3.2</span><span>JSP (View)</span></a></li><li><a class="is-flex" href="#Servlet-Controller"><span class="mr-2">3.3</span><span>Servlet (Controller)</span></a></li></ul></li><li><a class="is-flex" href="#참고"><span class="mr-2">4</span><span>참고</span></a></li></ul></div></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/sungho.png" alt="Sungho&#039;s Blog" height="28"></a><p class="size-small"><span>&copy; 2022 Sungho Hwang</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            site: {
+                url: 'http://sgc109.github.io',
+                external_link: {"enable":true,"exclude":[]}
+            },
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: ''
+                }
+            }
+        };</script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to Top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"Type something...","untitled":"(Untitled)","posts":"Posts","pages":"Pages","categories":"Categories","tags":"Tags"});
+        });</script></body></html>
