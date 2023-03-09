@@ -16,7 +16,7 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2021/07/23/tdd-review/</loc>
+        <loc>http://sgc109.github.io/2020/07/09/spring-running-startup-logic/</loc>
         <lastmod>2022-07-23T13:35:53.457Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -24,7 +24,7 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2020/07/09/spring-running-startup-logic/</loc>
+        <loc>http://sgc109.github.io/2021/07/23/tdd-review/</loc>
         <lastmod>2022-07-23T13:35:53.457Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -40,7 +40,7 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2020/07/06/rest-template/</loc>
+        <loc>http://sgc109.github.io/2020/07/05/software-craftman/</loc>
         <lastmod>2022-07-23T13:35:53.456Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -56,7 +56,7 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2020/07/05/software-craftman/</loc>
+        <loc>http://sgc109.github.io/2020/07/06/rest-template/</loc>
         <lastmod>2022-07-23T13:35:53.456Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -80,22 +80,6 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2020/11/25/python-and-concurrency/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2021/01/09/programming-in-scala/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://sgc109.github.io/2021/03/18/largest-rectangle-in-histogram/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -104,7 +88,23 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/2020/11/25/python-and-concurrency/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/2020/08/15/python-wsgi/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2021/01/09/programming-in-scala/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -121,6 +121,14 @@
 
     <url>
         <loc>http://sgc109.github.io/2020/07/16/git-submodule/</loc>
+        <lastmod>2022-07-23T13:35:53.454Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/2020/07/19/head-first-design-patterns/</loc>
         <lastmod>2022-07-23T13:35:53.454Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -152,14 +160,6 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/2020/07/19/head-first-design-patterns/</loc>
-        <lastmod>2022-07-23T13:35:53.454Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://sgc109.github.io/2021/01/23/api-server-security-in-k8s/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -176,6 +176,14 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/2020/08/09/ddd-basic/</loc>
+        <lastmod>2022-07-23T13:35:53.453Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/2021/11/18/contribution-to-debezium/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -185,14 +193,6 @@
 
     <url>
         <loc>http://sgc109.github.io/2020/08/09/ddd-aggregate/</loc>
-        <lastmod>2022-07-23T13:35:53.453Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/2020/08/09/ddd-basic/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
