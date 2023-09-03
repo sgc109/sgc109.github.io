@@ -50,6 +50,13 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/categories/Database/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/categories/Languages/Python/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -58,13 +65,6 @@
 
     <url>
         <loc>http://sgc109.github.io/categories/Languages/Java/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Database/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>

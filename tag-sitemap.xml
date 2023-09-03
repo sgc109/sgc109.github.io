@@ -38,27 +38,6 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/tags/WAS/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/tags/Web-Server/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/tags/Redis/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://sgc109.github.io/tags/Asynchronous/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -74,6 +53,27 @@
 
     <url>
         <loc>http://sgc109.github.io/tags/Coroutine/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Redis/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/WAS/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Web-Server/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -157,13 +157,6 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/tags/Design-Pattern/</loc>
-        <lastmod>2022-07-23T13:35:53.453Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://sgc109.github.io/tags/Domain-Driven-Design/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -172,6 +165,13 @@
 
     <url>
         <loc>http://sgc109.github.io/tags/Open-Source/</loc>
+        <lastmod>2022-07-23T13:35:53.453Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Design-Pattern/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
