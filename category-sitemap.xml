@@ -9,14 +9,14 @@
 
     <url>
         <loc>http://sgc109.github.io/categories/Server/Architecture/</loc>
-        <lastmod>2023-11-06T17:40:46.922Z</lastmod>
+        <lastmod>2023-11-06T17:42:36.805Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://sgc109.github.io/categories/Server/</loc>
-        <lastmod>2023-11-06T17:40:46.922Z</lastmod>
+        <lastmod>2023-11-06T17:42:36.805Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -57,13 +57,6 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/categories/Database/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://sgc109.github.io/categories/Languages/Python/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -72,6 +65,13 @@
 
     <url>
         <loc>http://sgc109.github.io/categories/Languages/Java/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/Database/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -92,14 +92,14 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/categories/Cloud/Kubernetes/</loc>
+        <loc>http://sgc109.github.io/categories/Tools/</loc>
         <lastmod>2022-07-23T13:35:53.454Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/categories/Tools/</loc>
+        <loc>http://sgc109.github.io/categories/Cloud/Kubernetes/</loc>
         <lastmod>2022-07-23T13:35:53.454Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -120,14 +120,14 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/categories/General/Domain-Driven-Design/</loc>
+        <loc>http://sgc109.github.io/categories/Open-Source/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/categories/Open-Source/</loc>
+        <loc>http://sgc109.github.io/categories/General/Domain-Driven-Design/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>

@@ -3,22 +3,22 @@
 
 
     <url>
-        <loc>http://sgc109.github.io/tags/Architecture/</loc>
-        <lastmod>2023-11-06T17:40:46.922Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://sgc109.github.io/tags/DB/</loc>
-        <lastmod>2023-11-06T17:40:46.922Z</lastmod>
+        <lastmod>2023-11-06T17:42:36.805Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://sgc109.github.io/tags/MSA/</loc>
-        <lastmod>2023-11-06T17:40:46.922Z</lastmod>
+        <lastmod>2023-11-06T17:42:36.805Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Architecture/</loc>
+        <lastmod>2023-11-06T17:42:36.805Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -45,13 +45,6 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/tags/Books/</loc>
-        <lastmod>2022-07-23T13:35:53.457Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://sgc109.github.io/tags/Java/</loc>
         <lastmod>2022-07-23T13:35:53.457Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -59,8 +52,8 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/tags/Redis/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <loc>http://sgc109.github.io/tags/Books/</loc>
+        <lastmod>2022-07-23T13:35:53.457Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -74,6 +67,27 @@
 
     <url>
         <loc>http://sgc109.github.io/tags/Web-Server/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Redis/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Functional-Programming/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Scala/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -102,20 +116,6 @@
 
     <url>
         <loc>http://sgc109.github.io/tags/Python/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/tags/Functional-Programming/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/tags/Scala/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -171,7 +171,7 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/tags/Design-Pattern/</loc>
+        <loc>http://sgc109.github.io/tags/Open-Source/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -185,7 +185,7 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/tags/Open-Source/</loc>
+        <loc>http://sgc109.github.io/tags/Design-Pattern/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
