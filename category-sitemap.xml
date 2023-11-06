@@ -8,6 +8,20 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/categories/Server/Architecture/</loc>
+        <lastmod>2023-11-06T17:40:46.922Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/categories/Server/</loc>
+        <lastmod>2023-11-06T17:40:46.922Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/categories/General/Algorithms/</loc>
         <lastmod>2022-07-27T03:01:00.010Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -36,14 +50,14 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/categories/Server/</loc>
-        <lastmod>2022-07-23T13:35:53.457Z</lastmod>
+        <loc>http://sgc109.github.io/categories/Database/Redis/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/categories/Database/Redis/</loc>
+        <loc>http://sgc109.github.io/categories/Database/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -58,13 +72,6 @@
 
     <url>
         <loc>http://sgc109.github.io/categories/Languages/Java/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Database/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -106,14 +113,14 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/categories/General/Domain-Driven-Design/</loc>
+        <loc>http://sgc109.github.io/categories/General/Design-Pattern/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/categories/General/Design-Pattern/</loc>
+        <loc>http://sgc109.github.io/categories/General/Domain-Driven-Design/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -122,13 +129,6 @@
     <url>
         <loc>http://sgc109.github.io/categories/Open-Source/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/categories/Server/Architecture/</loc>
-        <lastmod>2022-07-23T13:35:53.452Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
