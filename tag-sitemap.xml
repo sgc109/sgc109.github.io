@@ -4,21 +4,21 @@
 
     <url>
         <loc>http://sgc109.github.io/tags/DB/</loc>
-        <lastmod>2023-11-06T17:42:36.805Z</lastmod>
+        <lastmod>2023-11-06T17:44:01.615Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://sgc109.github.io/tags/MSA/</loc>
-        <lastmod>2023-11-06T17:42:36.805Z</lastmod>
+        <lastmod>2023-11-06T17:44:01.615Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://sgc109.github.io/tags/Architecture/</loc>
-        <lastmod>2023-11-06T17:42:36.805Z</lastmod>
+        <lastmod>2023-11-06T17:44:01.615Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -59,41 +59,6 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/tags/WAS/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/tags/Web-Server/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/tags/Redis/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/tags/Functional-Programming/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://sgc109.github.io/tags/Scala/</loc>
-        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://sgc109.github.io/tags/Asynchronous/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -115,7 +80,42 @@
     </url>
 
     <url>
+        <loc>http://sgc109.github.io/tags/Redis/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/WAS/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Web-Server/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://sgc109.github.io/tags/Python/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Functional-Programming/</loc>
+        <lastmod>2022-07-23T13:35:53.455Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Scala/</loc>
         <lastmod>2022-07-23T13:35:53.455Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -171,13 +171,6 @@
     </url>
 
     <url>
-        <loc>http://sgc109.github.io/tags/Open-Source/</loc>
-        <lastmod>2022-07-23T13:35:53.453Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://sgc109.github.io/tags/Domain-Driven-Design/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -186,6 +179,13 @@
 
     <url>
         <loc>http://sgc109.github.io/tags/Design-Pattern/</loc>
+        <lastmod>2022-07-23T13:35:53.453Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://sgc109.github.io/tags/Open-Source/</loc>
         <lastmod>2022-07-23T13:35:53.453Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
